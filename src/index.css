@@ -1,13 +1,236 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+  outline: none;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  width: 100vw;
+  padding-top: 100px;
+  height: 100vh;
+  background: #f7f7f7;
+  color: #555555;
+  overflow: hidden;
+  font-family: Source Sans Pro, sans-serif;
+}
+
+#root {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+.nav {
+  position: absolute;
+  background: #FFFFFF;
+  height: 80px;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  box-shadow:
+    2px 2px 5px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav h1 {
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.nav h1 span {
+  color: #69A7F0;
+  font-style: italic
+}
+
+.grid {
+  width: 630px;
+  height: 630px;
+  background: white;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.square {
+  width: 68px;
+  height: 68px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #efefef;
+  font-size: 22px;
+}
+
+.sqr-bdr-left {
+  border-left: 1px #999 solid
+}
+
+.sqr-bdr-right {
+  border-right: 1px #999 solid
+}
+
+.sqr-bdr-top {
+  border-top: 1px #999 solid
+}
+
+.sqr-bdr-bottom {
+  border-bottom: 1px #999 solid
+}
+
+.controls {
+  background: white;
+  width: 300px;
+  height: 575px;
+  margin-left: 50px;
+  border: 1px #efefef solid;
+  padding: 25px;
+}
+
+.controls .button,
+.reset-btn {
+  width: 100%;
+  height: 100px;
+  color: #FFF;
+  font-size: 22px;
+  background: #69A7F0;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer
+}
+
+.reset-btn {
+  width: 250px;
+  height: 80px
+}
+
+.controls .button.green {
+  background-color: green;
+  height: 60px;
+  margin-top: 20px
+}
+
+.controls .button:hover {
+  background: #65a1e6
+}
+
+.controls .number-option-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px
+}
+
+.controls .number-option-container .number-options {
+  width: 95px;
+  height: 100px;
+  border: 1px #efefef solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  cursor: pointer
+}
+
+.controls .number-option-container .number-options:hover {
+  background: #f3f6fa;
+}
+
+.count {
+  height: 30px;
+  margin-bottom: 20px
+}
+
+.square.hidden:hover {
+  background: #f3f6fa;
+  cursor: pointer
+}
+
+.square.hidden.correct {
+  color: green
+}
+
+.square.hidden.incorrect {
+  color: red
+}
+
+.square.hidden.peekcorrect {
+  background: green;
+  color: #FFFFFF
+}
+
+.square.hidden.peekincorrect {
+  background: red;
+  color: #FFFFFF
+}
+
+.square.hidden.clickedNumber {
+  background: rgba(0, 0, 0, 0.2)
+}
+
+.added {
+  color: #69A7F0
+}
+
+.count {
+  font-size: 20px;
+  text-align: center
+}
+
+#display-screen {
+  background: rgba(0, 0, 0, 0.9);
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+  display: none
+}
+
+#display-screen.showmessage {
+  display: flex
+}
+
+#display-screen .message-container {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: 300px;
+  padding: 1rem;
+  text-align: center;
+}
+
+#display-screen .message-container h2 {
+  font-size: 42px;
+  text-align: center;
+}
+
+#finalTime {
+  color: green;
+  font-size: 26px;
+  padding-bottom: 2rem
+}
+
+#name {
+  width: 80%;
+  align-self: center;
+  height: 40px;
+  border-radius: 5px;
+  padding: 5px
+}
+
+#closeBtn {
+  position: absolute;
+  right: 100px;
+  top: 100px;
+  z-index: 100;
+  color: white;
+  cursor: pointer;
+  border: 1px solid white;
+  padding: 15px 20px;
+  border-radius: 50%
 }
