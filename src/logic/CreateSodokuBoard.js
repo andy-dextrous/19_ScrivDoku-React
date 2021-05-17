@@ -1,7 +1,8 @@
 export const WIDTH = 9
-
+export const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 export function createSodokuBoard() {
-  const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  const MAXIMUM_ATTEMPTS = 1000
+
   const thisRow = []
   const board = []
   const numberSquareIndexes = [
@@ -17,13 +18,17 @@ export function createSodokuBoard() {
   ]
 
   const init = () => {
+    // Resets in case of recursive call
+    board.length = 0
+    thisRow.length = 0
+    // Start with a random first row
     board.push(...shuffle(numbers))
+    // For teh remaining rows, create them one at a time
     for (let i = 1; i < WIDTH; i++) {
       thisRow.length = 0
       let row = createRow()
       board.push(...row)
     }
-    console.log(board.length)
     return board
   }
 
@@ -32,7 +37,8 @@ export function createSodokuBoard() {
   function createRow() {
     const newRow = [...numbers].sort()
     const calculatedRow = selectNextNumber(newRow)
-    if (calculatedRow.length < WIDTH && i < 19) {
+    // Some layouts will not alow for any option to work. In which case, run the whole thing again. Otherwise we exceed max call stack
+    if (calculatedRow.length < WIDTH && i < MAXIMUM_ATTEMPTS) {
       i++
       thisRow.length = 0
       createRow()
@@ -112,6 +118,6 @@ export function createSodokuBoard() {
   if (board.length === WIDTH * WIDTH) {
     return board
   } else {
-    init()
+    return init()
   }
 }

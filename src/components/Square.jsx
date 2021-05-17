@@ -1,13 +1,14 @@
 import React from 'react'
 import {WIDTH} from '../logic/CreateSodokuBoard'
 
-const Square = ({number, index}) => {
-  
+const Square = (props) => {
+const {number, index, hidden, isClicked, onClick} = props
+
   function determineBorders(index){
     let classes = []
 
     if (index % 3 === 0) {
-      classes.push('sqr-bdr-left') 
+      classes.push('sqr-bdr-left')  
     }
     if ((index + 1) % WIDTH === 0) {
       classes.push('sqr-bdr-right')
@@ -20,12 +21,19 @@ const Square = ({number, index}) => {
       (index > (WIDTH * 5) - 1 && index < (WIDTH * 6))) {
         classes.push('sqr-bdr-bottom')
     }
+    if (isClicked === index && hidden) {
+      classes.push('clickedNumber')
+    }
     return classes.join(' ')
-}
+  }
+
 
   return (
-    <div className={"square " + determineBorders(index)}>
-      {number}
+    <div 
+      className={"square " + determineBorders(index)} 
+      onClick={onClick}
+      >
+      {!hidden && number}
     </div>
   )
 }
