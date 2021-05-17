@@ -1,16 +1,12 @@
-import React,{useContext} from 'react'
+import React from 'react'
 import Square from './Square'
 import {WIDTH} from '../logic/CreateSodokuBoard'
-import {boardContext} from '../App'
 
 const GameBoard = ({board, difficulty}) => {
   const EASY_SPACES = 45
   const MED_SPACES = 51
   const HARD_SPACES = 58
   const omittedSquares = []
-  const boardConfig = useContext(boardContext)
-
-
 
   const randomiseIndex = (difficulty) => {
       switch (difficulty) {
