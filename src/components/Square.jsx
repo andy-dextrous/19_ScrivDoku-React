@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {WIDTH} from '../logic/CreateSodokuBoard'
 
 const Square = (props) => {
 const {number, index, hidden, isClicked, onClick} = props
+const [isHovered, setIsHovered] = useState(false)
 
   function determineBorders(index){
     let classes = []
@@ -32,6 +33,9 @@ const {number, index, hidden, isClicked, onClick} = props
     <div 
       className={"square " + determineBorders(index)} 
       onClick={onClick}
+      onMouseOver={()=> {setIsHovered(true)}}
+      onMouseLeave={()=> {setIsHovered(false)}}
+      style={isHovered && hidden ?{backgroundColor:"#f3f6fa"}:{}}
       >
       {!hidden && number}
     </div>
