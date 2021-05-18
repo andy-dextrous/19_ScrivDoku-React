@@ -119,7 +119,8 @@ body {
 .controls .number-option-container {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 20px
+  margin-top: 20px;
+
 }
 
 .controls .number-option-container .number-options {
@@ -270,6 +271,11 @@ body {
   text-transform: uppercase
 }
 
+.timerDisplay {
+  display: flex;
+  align-items: center;
+}
+
 @media(max-width:800px) {
 
   body {
@@ -285,7 +291,9 @@ body {
 
   .controls {
     width: 90vw;
-    margin-left: 5vw
+    margin-left: 5vw;
+    display: flex;
+    flex-direction: column
   }
 
   #root {
@@ -295,5 +303,14 @@ body {
   #start-game {
     padding: 5px;
     height: 60px
+  }
+
+  .number-option-container {
+    order: -1;
+    margin-bottom: 10%;
+  }
+
+  .number-options {
+    width: 15%
   }
 }

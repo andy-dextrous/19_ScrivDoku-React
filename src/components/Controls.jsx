@@ -5,12 +5,12 @@ import NumberOption from './NumberOption'
 import Counter from './Counter'
 
 const Controls = (props) => {
-  const {startNewGame, setDifficulty, difficulty} = props
+  const {startNewGame, setDifficulty, difficulty, setIsPaused, isPaused} = props
   const [isNewGameButtonClick, setIsNewGameButtonClick] = useState(false)
 
   return (
     <div className="controls" id="controls" style={{position:"relative"}}>
-      <Counter difficulty = {difficulty} />
+      <Counter difficulty = {difficulty} setIsPaused ={setIsPaused} isPaused={isPaused}/>
       <button className="button" id="start-game" onClick={() => setIsNewGameButtonClick(!isNewGameButtonClick)}>New Game</button>
       <div className="number-option-container">
         {[...numbers].sort().map(number=>{

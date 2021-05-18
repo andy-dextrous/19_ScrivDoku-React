@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import {WIDTH} from '../logic/CreateSodokuBoard'
 import {numbers} from '../logic/CreateSodokuBoard'
 
@@ -7,9 +7,11 @@ const {number,
       index, 
       hidden,  
       setSelectedSquare, 
-      selectedSquare} = props
+      selectedSquare,
+      isPaused} = props
 const [isHovered, setIsHovered] = useState(false)
 const [chosenNumber, setChosenNumber] = useState(null)
+const chosenNumberPersist = useRef(null)
 
   function determineBorders(index){
     let classes = []
@@ -38,10 +40,7 @@ const [chosenNumber, setChosenNumber] = useState(null)
     setSelectedSquare(index)
   }
 
-
-
   useEffect(()=>{
-
     function inputValue(e) {
       const value = 
         e.type === 'click' ? 
@@ -51,7 +50,6 @@ const [chosenNumber, setChosenNumber] = useState(null)
       if (!numbers.includes(parseInt(value))) return; 
       setChosenNumber(value)
       setSelectedSquare(null)
-      console.log(value)
     }
 
     if(selectedSquare === index) {
@@ -74,6 +72,11 @@ const [chosenNumber, setChosenNumber] = useState(null)
 
   }, [selectedSquare, index, setSelectedSquare, hidden])
 
+  useEffect(()=>{
+    chosenNumberPersist.current = chosenNumber
+    if(chosenNumber)
+    console.log(chosenNumberPersist.current)
+  }, [isPaused, chosenNumber])
 
   return (
     <div 
@@ -87,9 +90,13 @@ const [chosenNumber, setChosenNumber] = useState(null)
         {}}
       >
       {!hidden && number}
-      {hidden && chosenNumber}
+      {hidden && chosenNumberPersist.current}
     </div>
   )
 }
 
 export default Square
+
+/*
+ TODO: get chosenNumber to persist over pause state
+*/

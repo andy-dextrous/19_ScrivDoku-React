@@ -17,6 +17,8 @@ function App() {
   const HARD_SPACES = 58
   const omittedSquares = []
 
+  const [isPaused, setIsPaused] = useState(false)
+
   const randomiseIndex = (difficulty) => {
     switch (difficulty) {
       case "easy" : 
@@ -59,8 +61,8 @@ for(let i=0; i<numberOfHiddenSquares; i++){
     return (
     <boardContext.Provider value={boardConfig}>
       <Nav />
-      <GameBoard board={boardConfig} difficulty={difficulty} omittedSquares={omittedSquares} />
-      <Controls startNewGame={startNewGame} setDifficulty={setDifficulty} difficulty={difficulty}/>
+      <GameBoard board={boardConfig} difficulty={difficulty} omittedSquares={omittedSquares} isPaused={isPaused} setIsPaused={setIsPaused}/>
+      <Controls startNewGame={startNewGame} setDifficulty={setDifficulty} difficulty={difficulty} setIsPaused={setIsPaused} isPaused={isPaused}/>
       <Display />
     </boardContext.Provider>
     )
