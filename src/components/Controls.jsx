@@ -4,13 +4,13 @@ import {numbers} from '../logic/CreateSodokuBoard'
 import NumberOption from './NumberOption'
 import Counter from './Counter'
 
-const Controls = ({startNewGame, setDifficulty}) => {
-  
+const Controls = (props) => {
+  const {startNewGame, setDifficulty, difficulty} = props
   const [isNewGameButtonClick, setIsNewGameButtonClick] = useState(false)
 
   return (
     <div className="controls" id="controls" style={{position:"relative"}}>
-      <Counter />
+      <Counter difficulty = {difficulty} />
       <button className="button" id="start-game" onClick={() => setIsNewGameButtonClick(!isNewGameButtonClick)}>New Game</button>
       <div className="number-option-container">
         {[...numbers].sort().map(number=>{

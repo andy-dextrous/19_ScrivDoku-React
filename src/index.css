@@ -166,7 +166,7 @@ body {
 }
 
 .square.clickedNumber {
-  background: rgba(0, 0, 0, 0.2)
+  background: #d7dfeb
 }
 
 .added {
@@ -235,6 +235,39 @@ body {
   border: 1px solid white;
   padding: 15px 20px;
   border-radius: 50%
+}
+
+.count {
+  display: flex;
+}
+
+.timerDisplay,
+.difficulty-display {
+  width: 50%
+}
+
+.timerDisplay {
+  text-align: left
+}
+
+.difficulty-display {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  text-align: right
+}
+
+.difficulty-display span {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.difficulty-display h3 {
+  margin: 0;
+  font-size: 16px;
+  text-transform: uppercase
 }
 
 @media(max-width:800px) {

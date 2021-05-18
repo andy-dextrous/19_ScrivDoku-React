@@ -1,7 +1,7 @@
 import React, {useContext, useState, useEffect} from 'react'
 import {boardContext} from '../App'
 
-const Counter = () => {
+const Counter = ({difficulty}) => {
   const boardConfig = useContext(boardContext)
   const [timer,setTimer] = useState(0)
 
@@ -30,7 +30,10 @@ const Counter = () => {
 }, [boardConfig])
 
   return (
-    <div className="count" id="count">{timer}</div>
+    <div className="count" id="count">
+      <div className="timerDisplay">{timer}</div>
+      <div className="difficulty-display"><span>You are playing</span><h3>{difficulty} Mode</h3></div>
+    </div>
   )
 }
 

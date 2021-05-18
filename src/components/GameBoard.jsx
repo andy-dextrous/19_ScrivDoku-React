@@ -1,40 +1,14 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import Square from './Square'
-import {WIDTH} from '../logic/CreateSodokuBoard'
 
-const GameBoard = ({board, difficulty}) => {
-  const EASY_SPACES = 45
-  const MED_SPACES = 51
-  const HARD_SPACES = 58
-  const omittedSquares = []
 
-  const randomiseIndex = (difficulty) => {
-      switch (difficulty) {
-        case "easy" : 
-          return EASY_SPACES
-        case "medium" : 
-          return MED_SPACES
-        case "hard" : 
-          return HARD_SPACES
-        default: 
-          return 0
-      }
-  }
+const GameBoard = ({board, omittedSquares}) => {
 
-  const numberOfHiddenSquares = randomiseIndex(difficulty)
+  const [selectedSquare, setSelectedSquare] = useState(null)
 
-  const pickRandomSquare = (chosenIndexes) => {
-    let randomSelection = Math.floor(Math.random() * WIDTH * WIDTH)
-    if (!chosenIndexes.includes(randomSelection))  {
-        return randomSelection
-        } else {  
-        return pickRandomSquare(chosenIndexes)
-      }
-  }
-
-  for(let i=0; i<numberOfHiddenSquares; i++){
-    omittedSquares.push(pickRandomSquare(omittedSquares))
-  }
+  useEffect(() => {
+    setSelectedSquare(null)
+  }, [board])
 
   if (!board) return
   return (
@@ -45,6 +19,8 @@ const GameBoard = ({board, difficulty}) => {
           number={number} 
           index={index}
           hidden={omittedSquares.includes(index)? true :false}
+          setSelectedSquare={setSelectedSquare}
+          selectedSquare={selectedSquare}
           />
       })}
     </div>

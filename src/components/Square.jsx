@@ -1,9 +1,15 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {WIDTH} from '../logic/CreateSodokuBoard'
+import {numbers} from '../logic/CreateSodokuBoard'
 
 const Square = (props) => {
-const {number, index, hidden, isClicked, onClick} = props
+const {number, 
+      index, 
+      hidden,  
+      setSelectedSquare, 
+      selectedSquare} = props
 const [isHovered, setIsHovered] = useState(false)
+const [chosenNumber, setChosenNumber] = useState(null)
 
   function determineBorders(index){
     let classes = []
@@ -22,22 +28,66 @@ const [isHovered, setIsHovered] = useState(false)
       (index > (WIDTH * 5) - 1 && index < (WIDTH * 6))) {
         classes.push('sqr-bdr-bottom')
     }
-    if (isClicked === index && hidden) {
+    if (selectedSquare === index && hidden) {
       classes.push('clickedNumber')
     }
     return classes.join(' ')
   }
 
+  function handleClick() {
+    setSelectedSquare(index)
+  }
+
+
+
+  useEffect(()=>{
+
+    function inputValue(e) {
+      const value = 
+        e.type === 'click' ? 
+        e.target.innerHTML : 
+        e.key
+      if (!hidden) return; 
+      if (!numbers.includes(parseInt(value))) return; 
+      setChosenNumber(value)
+      setSelectedSquare(null)
+      console.log(value)
+    }
+
+    if(selectedSquare === index) {
+      let numberButtons = document.querySelectorAll('.number-options')
+      
+      numberButtons.forEach(button=>{
+       button.addEventListener('click', inputValue)
+      })
+      document.addEventListener("keydown", inputValue)
+    }
+
+    return () => {
+      if(selectedSquare === index){
+      let numberButtons = document.querySelectorAll('.number-options')
+      numberButtons.forEach(button=>{
+       button.removeEventListener('click', inputValue)
+      })}
+      document.removeEventListener("keydown", inputValue)
+    }
+
+  }, [selectedSquare, index, setSelectedSquare, hidden])
+
 
   return (
     <div 
       className={"square " + determineBorders(index)} 
-      onClick={onClick}
+      onClick={handleClick}
       onMouseOver={()=> {setIsHovered(true)}}
       onMouseLeave={()=> {setIsHovered(false)}}
-      style={isHovered && hidden ?{backgroundColor:"#f3f6fa"}:{}}
+      style={isHovered && hidden && selectedSquare !== index ? 
+        {backgroundColor:"#f3f6fa"}: 
+        chosenNumber && selectedSquare !== index ? {backgroundColor:'#f3f6fa'} : 
+        {}}
       >
       {!hidden && number}
+      {hidden && chosenNumber}
     </div>
   )
 }
