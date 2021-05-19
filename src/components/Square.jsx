@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, {useState, useEffect} from 'react'
 import {WIDTH} from '../logic/CreateSodokuBoard'
 import {numbers} from '../logic/CreateSodokuBoard'
 
@@ -7,11 +7,10 @@ const {number,
       index, 
       hidden,  
       setSelectedSquare, 
-      selectedSquare,
-      isPaused} = props
+      selectedSquare} = props
 const [isHovered, setIsHovered] = useState(false)
 const [chosenNumber, setChosenNumber] = useState(null)
-const chosenNumberPersist = useRef(null)
+
 
   function determineBorders(index){
     let classes = []
@@ -72,11 +71,6 @@ const chosenNumberPersist = useRef(null)
 
   }, [selectedSquare, index, setSelectedSquare, hidden])
 
-  useEffect(()=>{
-    chosenNumberPersist.current = chosenNumber
-    if(chosenNumber)
-    console.log(chosenNumberPersist.current)
-  }, [isPaused, chosenNumber])
 
   return (
     <div 
@@ -90,7 +84,7 @@ const chosenNumberPersist = useRef(null)
         {}}
       >
       {!hidden && number}
-      {hidden && chosenNumberPersist.current}
+      {hidden && chosenNumber}
     </div>
   )
 }

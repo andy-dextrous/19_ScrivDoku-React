@@ -54,8 +54,8 @@ body {
 }
 
 .square {
-  width: 11.11%;
-  height: 11.11%;
+  height:calc(50vw/9);
+  width:calc(50vw/9);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -98,7 +98,8 @@ body {
   background: #69A7F0;
   border: none;
   border-radius: 10px;
-  cursor: pointer
+  cursor: pointer;
+  user-select: none;
 }
 
 .reset-btn {
@@ -256,7 +257,8 @@ body {
   flex-direction: column;
   margin: 0;
   padding: 0;
-  text-align: right
+  text-align: right;
+  user-select: none;
 }
 
 .difficulty-display span {

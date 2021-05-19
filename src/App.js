@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useCallback} from 'react'
 import './index.css';
 import GameBoard from './components/GameBoard'
 import Controls from './components/Controls'
 import Nav from './components/Nav'
 import Display from './components/Display'
 import {createSodokuBoard} from '../src/logic/CreateSodokuBoard'
-import {WIDTH} from '../src/logic/CreateSodokuBoard'
+import {setHiddenSquares} from '../src/logic/SetHiddenSquares'
 
 export const boardContext = React.createContext()
 
@@ -15,10 +15,8 @@ function App() {
   const EASY_SPACES = 45
   const MED_SPACES = 51
   const HARD_SPACES = 58
-  const omittedSquares = []
-
   const [isPaused, setIsPaused] = useState(false)
-
+  const [omittedSquares, setOmittedSquares] = useState([])
   const randomiseIndex = (difficulty) => {
     switch (difficulty) {
       case "easy" : 
@@ -30,33 +28,17 @@ function App() {
       default: 
         return 0
     }
-}
-
-const numberOfHiddenSquares = randomiseIndex(difficulty)
-
-const pickRandomSquare = (chosenIndexes) => {
-  let randomSelection = Math.floor(Math.random() * WIDTH * WIDTH)
-  if (!chosenIndexes.includes(randomSelection))  {
-      return randomSelection
-      } else {  
-      return pickRandomSquare(chosenIndexes)
-    }
-}
-
-for(let i=0; i<numberOfHiddenSquares; i++){
-  omittedSquares.push(pickRandomSquare(omittedSquares))
-}
-
-  const startNewGame = () => {  
-    setBoardConfig(createSodokuBoard())
   }
+  const numberOfHiddenSquares = randomiseIndex(difficulty)
+
+  const startNewGame = useCallback(() => {
+    setBoardConfig(createSodokuBoard())
+    setOmittedSquares(setHiddenSquares(numberOfHiddenSquares))
+  }, [numberOfHiddenSquares])
 
   useEffect(() => {
     startNewGame()
-    console.log('App level')
-  }, [])
-
-
+  }, [startNewGame])
 
     return (
     <boardContext.Provider value={boardConfig}>
