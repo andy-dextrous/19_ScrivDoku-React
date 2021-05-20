@@ -83,6 +83,35 @@ body {
   border: 1px solid #efefef;
   font-size: 22px;
   cursor: pointer;
+  position: relative;
+}
+
+.square .notes {
+  font-size: 10px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  color: #999;
+  font-weight: bold;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+  -ms-grid-rows: (1fr)[3];
+      grid-template-rows: repeat(3, 1fr);
+}
+
+.square .notes span {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  pointer-events: none;
 }
 
 .sqr-bdr-left {
@@ -168,6 +197,38 @@ body {
 
 .controls .number-option-container .number-options:hover {
   background: #f3f6fa;
+}
+
+.in-game-controls {
+  padding: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 50%;
+  margin: auto;
+}
+
+.in-game-controls button {
+  padding: 15px 18px;
+  background: #f3f6fa;
+  font-size: 24px;
+  border-radius: 100%;
+  border: none;
+  cursor: pointer;
+  color: #69a7f0;
+}
+
+.in-game-controls button:hover {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+  -webkit-transform-origin: center center;
+          transform-origin: center center;
 }
 
 .count {

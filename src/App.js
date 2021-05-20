@@ -9,6 +9,8 @@ import {setHiddenSquares} from '../src/logic/SetHiddenSquares'
 
 export const boardContext = React.createContext()
 export const pausedContext = React.createContext()
+export const isCorrectContext = React.createContext()
+export const takeNotesTurnedOnContext = React.createContext()
 
 function App() {
   const [boardConfig, setBoardConfig] = useState([])
@@ -18,6 +20,8 @@ function App() {
   const HARD_SPACES = 58
   const [isPaused, setIsPaused] = useState(false)
   const [omittedSquares, setOmittedSquares] = useState([])
+  const [isCorrectTurnedOn, setIsCorrectTurnedOn] = useState(false)
+  const [takeNotesTurnedOn, setTakeNotesTurnedOn] = useState(false)
   const randomiseIndex = (difficulty) => {
     switch (difficulty) {
       case "easy" : 
@@ -37,40 +41,44 @@ function App() {
     setOmittedSquares(setHiddenSquares(numberOfHiddenSquares))
   }, [numberOfHiddenSquares])
 
-  // function setActiveTabListener() {
-  //   if (document.hidden) {
-  //     setIsPaused(true)
-  //   } else {
-  //     setIsPaused(false)
-  //   }
-  // }
+  function setActiveTabListener() {
+    if (document.hidden) {
+      setIsPaused(true)
+    } else {
+      setIsPaused(false)
+    }
+  }
 
   useEffect(() => {
     startNewGame()
   }, [startNewGame])
 
-  // useEffect(()=> {
-  //   document.addEventListener('visibilitychange', setActiveTabListener )
-  //   return function cleanUp() {
-  //     document.removeEventListener('visibilitychange', setActiveTabListener )
-  //   }
-  // }, [boardConfig])
+  useEffect(()=> {
+    document.addEventListener('visibilitychange', setActiveTabListener )
+    return function cleanUp() {
+      document.removeEventListener('visibilitychange', setActiveTabListener )
+    }
+  }, [boardConfig])
 
     return (
     <boardContext.Provider value={boardConfig}>
       <pausedContext.Provider value={isPaused}>
-        <Nav />
-        <GameBoard board={boardConfig} 
-                  difficulty={difficulty} 
-                  omittedSquares={omittedSquares} 
-                  isPaused={isPaused} 
-                  setIsPaused={setIsPaused}/>
-        <Controls startNewGame={startNewGame} 
-                  setDifficulty={setDifficulty} 
-                  difficulty={difficulty} 
-                  setIsPaused={setIsPaused} 
-                  isPaused={isPaused}/>
-        <Display />
+        <isCorrectContext.Provider value={{isCorrectTurnedOn, setIsCorrectTurnedOn}}>
+          <takeNotesTurnedOnContext.Provider value={{takeNotesTurnedOn, setTakeNotesTurnedOn}}>
+            <Nav />
+            <GameBoard board={boardConfig} 
+                      difficulty={difficulty} 
+                      omittedSquares={omittedSquares} 
+                      isPaused={isPaused} 
+                      setIsPaused={setIsPaused}/>
+            <Controls startNewGame={startNewGame} 
+                      setDifficulty={setDifficulty} 
+                      difficulty={difficulty} 
+                      setIsPaused={setIsPaused} 
+                      isPaused={isPaused}/>
+            <Display />
+          </takeNotesTurnedOnContext.Provider>
+        </isCorrectContext.Provider>
       </pausedContext.Provider>
     </boardContext.Provider>
     )

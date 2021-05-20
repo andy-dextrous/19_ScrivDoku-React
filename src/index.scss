@@ -61,6 +61,26 @@ body {
   border: 1px solid #efefef;
   font-size: 22px;
   cursor: pointer;
+  position: relative;
+}
+
+.square .notes {
+  font-size: 10px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  color: #999;
+  font-weight: bold;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.square .notes span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
 }
 
 .sqr-bdr-left {
@@ -134,6 +154,30 @@ body {
 
 .controls .number-option-container .number-options:hover {
   background: #f3f6fa;
+}
+
+.in-game-controls {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  margin: auto;
+}
+
+.in-game-controls button {
+  padding: 15px 18px;
+  background: #f3f6fa;
+  font-size: 24px;
+  border-radius: 100%;
+  border: none;
+  cursor: pointer;
+  color: #69a7f0;
+}
+
+.in-game-controls button:hover {
+  transform: scale(1.05);
+  transform-origin: center center;
 }
 
 .count {
