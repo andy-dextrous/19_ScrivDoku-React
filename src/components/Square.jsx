@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import {WIDTH} from '../logic/CreateSodokuBoard'
 import {numbers} from '../logic/CreateSodokuBoard'
+import {pausedContext, boardContext} from '../App'
 
 const Square = (props) => {
 const {number, 
@@ -10,7 +11,9 @@ const {number,
       selectedSquare} = props
 const [isHovered, setIsHovered] = useState(false)
 const [chosenNumber, setChosenNumber] = useState(null)
-
+const isPaused = useContext(pausedContext)
+const boardConfig = useContext(boardContext)
+const [style, setStyle] = useState({color:"green"})
 
   function determineBorders(index){
     let classes = []
@@ -49,6 +52,7 @@ const [chosenNumber, setChosenNumber] = useState(null)
       if (!numbers.includes(parseInt(value))) return; 
       setChosenNumber(value)
       setSelectedSquare(null)
+      sessionStorage.setItem(index, value)
     }
 
     if(selectedSquare === index) {
@@ -69,7 +73,30 @@ const [chosenNumber, setChosenNumber] = useState(null)
       document.removeEventListener("keydown", inputValue)
     }
 
-  }, [selectedSquare, index, setSelectedSquare, hidden])
+  }, [selectedSquare, index, setSelectedSquare, hidden, chosenNumber])
+
+  useEffect(() => {
+    if (!isPaused)  {
+    const persistedNumber = sessionStorage.getItem(index)
+    setChosenNumber(persistedNumber)}
+  }, [isPaused, index, boardConfig])
+
+
+useEffect(()=>{
+  const styleObject = {}
+
+  if (isHovered && hidden && selectedSquare !== index) 
+    styleObject.backgroundColor = "#f3f6fa"  
+  if (chosenNumber && selectedSquare !== index) 
+    styleObject.backgroundColor = '#f3f6fa'
+  if (chosenNumber && chosenNumber !== number) 
+    styleObject.color = "red"
+  if (chosenNumber && parseInt(chosenNumber) === number) 
+    styleObject.color = "green"
+    
+    setStyle(styleObject)
+
+}, [isHovered, chosenNumber, hidden, index, selectedSquare, number])
 
 
   return (
@@ -78,10 +105,7 @@ const [chosenNumber, setChosenNumber] = useState(null)
       onClick={handleClick}
       onMouseOver={()=> {setIsHovered(true)}}
       onMouseLeave={()=> {setIsHovered(false)}}
-      style={isHovered && hidden && selectedSquare !== index ? 
-        {backgroundColor:"#f3f6fa"}: 
-        chosenNumber && selectedSquare !== index ? {backgroundColor:'#f3f6fa'} : 
-        {}}
+      style={style}
       >
       {!hidden && number}
       {hidden && chosenNumber}

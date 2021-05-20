@@ -8,6 +8,7 @@ import {createSodokuBoard} from '../src/logic/CreateSodokuBoard'
 import {setHiddenSquares} from '../src/logic/SetHiddenSquares'
 
 export const boardContext = React.createContext()
+export const pausedContext = React.createContext()
 
 function App() {
   const [boardConfig, setBoardConfig] = useState([])
@@ -30,22 +31,47 @@ function App() {
     }
   }
   const numberOfHiddenSquares = randomiseIndex(difficulty)
-
   const startNewGame = useCallback(() => {
+    sessionStorage.clear()
     setBoardConfig(createSodokuBoard())
     setOmittedSquares(setHiddenSquares(numberOfHiddenSquares))
   }, [numberOfHiddenSquares])
+
+  // function setActiveTabListener() {
+  //   if (document.hidden) {
+  //     setIsPaused(true)
+  //   } else {
+  //     setIsPaused(false)
+  //   }
+  // }
 
   useEffect(() => {
     startNewGame()
   }, [startNewGame])
 
+  // useEffect(()=> {
+  //   document.addEventListener('visibilitychange', setActiveTabListener )
+  //   return function cleanUp() {
+  //     document.removeEventListener('visibilitychange', setActiveTabListener )
+  //   }
+  // }, [boardConfig])
+
     return (
     <boardContext.Provider value={boardConfig}>
-      <Nav />
-      <GameBoard board={boardConfig} difficulty={difficulty} omittedSquares={omittedSquares} isPaused={isPaused} setIsPaused={setIsPaused}/>
-      <Controls startNewGame={startNewGame} setDifficulty={setDifficulty} difficulty={difficulty} setIsPaused={setIsPaused} isPaused={isPaused}/>
-      <Display />
+      <pausedContext.Provider value={isPaused}>
+        <Nav />
+        <GameBoard board={boardConfig} 
+                  difficulty={difficulty} 
+                  omittedSquares={omittedSquares} 
+                  isPaused={isPaused} 
+                  setIsPaused={setIsPaused}/>
+        <Controls startNewGame={startNewGame} 
+                  setDifficulty={setDifficulty} 
+                  difficulty={difficulty} 
+                  setIsPaused={setIsPaused} 
+                  isPaused={isPaused}/>
+        <Display />
+      </pausedContext.Provider>
     </boardContext.Provider>
     )
 }

@@ -5,7 +5,7 @@ import { FaPlay } from 'react-icons/fa';
 
 const Counter = ({difficulty, setIsPaused, isPaused}) => {
   const boardConfig = useContext(boardContext)
-  const [timer,setTimer] = useState(0)
+  const [timer,setTimer] = useState("00:00")
   const pausedValue = useRef(0)
   const pausedSeconds = useRef(0)
 
