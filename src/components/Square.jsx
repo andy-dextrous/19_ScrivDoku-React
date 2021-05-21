@@ -99,7 +99,8 @@ const [notes, setNotes] = useState([])
 
 useEffect(()=>{
   const styleObject = {}
-
+  if (chosenNumber) {
+    styleObject.color="#69a7f0"}
   if (isHovered && hidden && selectedSquare !== index) 
     styleObject.backgroundColor = "#f3f6fa"  
   if (chosenNumber && selectedSquare !== index) 
