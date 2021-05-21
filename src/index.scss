@@ -45,16 +45,16 @@ body {
 }
 
 .grid {
-  width: 50vw;
-  height: 50vw;
+  width: 60vh;
+  height: 60vh;
   background: white;
   display: flex;
   flex-wrap: wrap;
 }
 
 .square {
-  height: calc(50vw / 9);
-  width: calc(50vw / 9);
+  height: calc(60vh / 9);
+  width: calc(60vh / 9);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -62,6 +62,9 @@ body {
   font-size: 22px;
   cursor: pointer;
   position: relative;
+  color: #666;
+  font-weight: 300;
+  font-size: 36px;
 }
 
 .square .notes {
@@ -105,6 +108,9 @@ body {
   margin-left: 50px;
   border: 1px #efefef solid;
   padding: 25px;
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
 }
 
 .controls .button,
@@ -144,16 +150,18 @@ body {
 .controls .number-option-container .number-options {
   width: 33%;
   height: 100px;
-  border: 1px #efefef solid;
+  border: 3px #fff solid;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 32px;
   cursor: pointer;
+  background-color: #f3f6fa;
+  border-radius: 5px;
 }
 
 .controls .number-option-container .number-options:hover {
-  background: #f3f6fa;
+  background: #d6dfeb;
 }
 
 .in-game-controls {
@@ -161,8 +169,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 50%;
-  margin: auto;
+  width: 70%;
+  margin: 10px auto;
 }
 
 .in-game-controls button {
@@ -178,6 +186,10 @@ body {
 .in-game-controls button:hover {
   transform: scale(1.05);
   transform-origin: center center;
+}
+
+#start-game {
+  min-height: 50px;
 }
 
 .count {
@@ -358,28 +370,34 @@ body {
   border-color: #d7dfeb !important;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
   body {
     padding: 0;
     margin: 100px 0 0 0;
   }
 
   .square {
-    height: 11.11%;
-    width: 11.11%;
+    height: calc(90vw / 9);
+    width: calc(90vw / 9);
+    font-size: 28px;
   }
 
   .grid {
     width: 90vw;
     height: 90vw;
     margin: 5vw;
+    margin: auto;
+    margin-bottom: 2%;
   }
 
   .controls {
-    width: 90vw;
-    margin-left: 5vw;
+    width: 95vw;
     display: flex;
     flex-direction: column;
+    margin: auto;
+    padding: 10px;
+    height: unset;
+    justify-content: flex-start;
   }
 
   #root {
@@ -389,14 +407,36 @@ body {
   #start-game {
     padding: 5px;
     height: 60px;
+    order: 4;
+  }
+
+  .in-game-controls {
+    order: 1;
+    height: 100px;
+    margin: 0 auto;
+  }
+
+  .count {
+    order: -1;
   }
 
   .number-option-container {
     order: -1;
     margin-bottom: 10%;
+    width: 100%;
+    // justify-content: space-between;
   }
 
-  .number-options {
-    width: 15%;
+  .controls .number-option-container .number-options {
+    width: calc(90vw / 9 - 1px);
+    border-width: 1px;
+    margin: 0;
+    padding: 0;
+    height: calc(90vw / 9);
+    font-size: 24px;
+  }
+
+  #dropDown {
+    top: -44%;
   }
 }

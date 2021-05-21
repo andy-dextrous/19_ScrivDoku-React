@@ -39,7 +39,7 @@ const Controls = (props) => {
           return <NumberOption number={number} key={number} />
         })}
       </div>
-      <button className="button green" id="check-score">Check Answers!</button>
+      {/* <button className="button green" id="check-score">Check Answers!</button> */}
       {isNewGameButtonClick && <GameSelector 
                       startNewGame={startNewGame} 
                       setDifficulty={setDifficulty} 
