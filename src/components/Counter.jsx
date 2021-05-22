@@ -59,7 +59,7 @@ function unPause() {
 
   return (
     <div className="count" id="count">
-      <div className="timerDisplay">{!isPaused?timer:pausedValue.current}
+      <div id="timer" className="timerDisplay">{!isPaused?timer:pausedValue.current}
       { !isPaused ?
       <FaPause style={{padding:'5px', marginLeft:'5px', border:'2px solid #555', borderRadius:'50%', width:'30px', height:'30px', cursor:'pointer'}}
                 onClick={pausePlay}/>

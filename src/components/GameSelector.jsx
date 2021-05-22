@@ -5,18 +5,21 @@ import ButtonIcon from './ButtonIcon'
 const Game_Selector = (props) => {
 
   const {startNewGame, 
+        isWinner, 
         setDifficulty, 
         setIsNewGameButtonClick, 
-        isNewGameButtonClick} = props
+        isNewGameButtonClick,
+        setIsWinner} = props
 
   function init(difficulty) {
     startNewGame()
     setDifficulty(difficulty)
     setIsNewGameButtonClick(!isNewGameButtonClick)
+    setIsWinner(false)
   }
 
   return (
-    <div id="dropDown" >
+    <div id="dropDown" className={isWinner && 'winner'}>
       <div>
         <h3 style={{paddingBottom:"10px"}}>Select Difficulty</h3>
       </div>

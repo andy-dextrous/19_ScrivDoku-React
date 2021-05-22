@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react'
 import {WIDTH} from '../logic/CreateSodokuBoard'
 import {numbers} from '../logic/CreateSodokuBoard'
-import {pausedContext, boardContext, takeNotesTurnedOnContext, isCorrectContext} from '../App'
+import {pausedContext, boardContext, takeNotesTurnedOnContext, isCorrectContext, chosenNumbersContext} from '../App'
 import Notes from './Notes'
 
 const Square = (props) => {
@@ -18,6 +18,7 @@ const [style, setStyle] = useState({color:"green"})
 const {takeNotesTurnedOn} = useContext(takeNotesTurnedOnContext) 
 const {isCorrectTurnedOn} = useContext(isCorrectContext) 
 const [notes, setNotes] = useState([])
+const {chosenNumbers, setChosenNumbers} = useContext(chosenNumbersContext)
 
   function determineBorders(index){
     let classes = []
@@ -56,12 +57,17 @@ const [notes, setNotes] = useState([])
         if (!numbers.includes(parseInt(value)) && e.key !== 'Backspace') return;
         if(!takeNotesTurnedOn){
           setChosenNumber(value)
+          if(!chosenNumbers.includes(index))
+            { setChosenNumbers([...chosenNumbers, index])}
           setSelectedSquare(null)
           sessionStorage.setItem(index, value)
           setNotes([])
          }
         if ( e.key === 'Backspace' ) {
           setChosenNumber(null)
+          setChosenNumbers(chosenNumbers.filter(chosen=>{
+            return chosen !== index
+          }))
           setSelectedSquare(null)
           sessionStorage.removeItem(index)
          }
@@ -69,7 +75,6 @@ const [notes, setNotes] = useState([])
 
     if(selectedSquare === index) {
       let numberButtons = document.querySelectorAll('.number-options')
-      
       numberButtons.forEach(button=>{
        button.addEventListener('click', inputValue)
       })
@@ -84,8 +89,7 @@ const [notes, setNotes] = useState([])
       })}
       document.removeEventListener("keydown", inputValue)
     }
-
-  }, [selectedSquare, index, setSelectedSquare, hidden, chosenNumber, takeNotesTurnedOn])
+  }, [selectedSquare, index, setSelectedSquare, hidden, chosenNumber, takeNotesTurnedOn, chosenNumbers, setChosenNumbers])
 
   useEffect(() => {
     if (!isPaused)  {
@@ -143,6 +147,7 @@ return function cleanup(){
 }
 
 }, [takeNotesTurnedOn, selectedSquare, index, hidden, setSelectedSquare, notes])
+
 
   return (
     <div 

@@ -3,7 +3,6 @@ import './index.css';
 import GameBoard from './components/GameBoard'
 import Controls from './components/Controls'
 import Nav from './components/Nav'
-import Display from './components/Display'
 import {createSodokuBoard} from '../src/logic/CreateSodokuBoard'
 import {setHiddenSquares} from '../src/logic/SetHiddenSquares'
 
@@ -11,17 +10,28 @@ export const boardContext = React.createContext()
 export const pausedContext = React.createContext()
 export const isCorrectContext = React.createContext()
 export const takeNotesTurnedOnContext = React.createContext()
+export const chosenNumbersContext = React.createContext()
+
+/*
+  const EASY_SPACES = 45
+  const MED_SPACES = 51
+  const HARD_SPACES = 58
+*/
 
 function App() {
   const [boardConfig, setBoardConfig] = useState([])
   const [difficulty, setDifficulty] = useState("easy")
-  const EASY_SPACES = 45
-  const MED_SPACES = 51
-  const HARD_SPACES = 58
+  const EASY_SPACES = 30
+  const MED_SPACES = 45
+  const HARD_SPACES = 50
   const [isPaused, setIsPaused] = useState(false)
   const [omittedSquares, setOmittedSquares] = useState([])
   const [isCorrectTurnedOn, setIsCorrectTurnedOn] = useState(false)
   const [takeNotesTurnedOn, setTakeNotesTurnedOn] = useState(false)
+  const [chosenNumbers,setChosenNumbers] = useState([])
+  
+  
+  // use global variables to return correct string
   const randomiseIndex = (difficulty) => {
     switch (difficulty) {
       case "easy" : 
@@ -35,10 +45,12 @@ function App() {
     }
   }
   const numberOfHiddenSquares = randomiseIndex(difficulty)
+
   const startNewGame = useCallback(() => {
     sessionStorage.clear()
     setBoardConfig(createSodokuBoard())
     setOmittedSquares(setHiddenSquares(numberOfHiddenSquares))
+    setChosenNumbers([])
   }, [numberOfHiddenSquares])
 
   function setActiveTabListener() {
@@ -65,18 +77,22 @@ function App() {
       <pausedContext.Provider value={isPaused}>
         <isCorrectContext.Provider value={{isCorrectTurnedOn, setIsCorrectTurnedOn}}>
           <takeNotesTurnedOnContext.Provider value={{takeNotesTurnedOn, setTakeNotesTurnedOn}}>
-            <Nav />
-            <GameBoard board={boardConfig} 
-                      difficulty={difficulty} 
-                      omittedSquares={omittedSquares} 
-                      isPaused={isPaused} 
-                      setIsPaused={setIsPaused}/>
-            <Controls startNewGame={startNewGame} 
-                      setDifficulty={setDifficulty} 
-                      difficulty={difficulty} 
-                      setIsPaused={setIsPaused} 
-                      isPaused={isPaused}/>
-            <Display />
+            <chosenNumbersContext.Provider value={{chosenNumbers, setChosenNumbers}}>
+              <Nav />         
+              <GameBoard board={boardConfig} 
+                        difficulty={difficulty} 
+                        omittedSquares={omittedSquares} 
+                        isPaused={isPaused} 
+                        setIsPaused={setIsPaused}/>
+              <Controls startNewGame={startNewGame} 
+                        board={boardConfig} 
+                        setDifficulty={setDifficulty} 
+                        difficulty={difficulty} 
+                        setIsPaused={setIsPaused} 
+                        isPaused={isPaused}
+                        omittedSquares={omittedSquares}
+                        chosenNumbers={chosenNumbers} />       
+            </chosenNumbersContext.Provider>
           </takeNotesTurnedOnContext.Provider>
         </isCorrectContext.Provider>
       </pausedContext.Provider>

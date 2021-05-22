@@ -114,7 +114,8 @@ body {
 }
 
 .controls .button,
-.reset-btn {
+.reset-btn,
+.display button.start {
   width: 100%;
   height: 100px;
   color: #fff;
@@ -124,6 +125,10 @@ body {
   border-radius: 10px;
   cursor: pointer;
   user-select: none;
+}
+
+.display button.start {
+  max-width: 500px;
 }
 
 .reset-btn {
@@ -233,39 +238,6 @@ body {
   text-align: center;
 }
 
-#display-screen {
-  background: rgba(0, 0, 0, 0.9);
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  color: white;
-  display: none;
-}
-
-#display-screen.showmessage {
-  display: flex;
-}
-
-#display-screen .message-container {
-  display: flex;
-  flex-direction: column;
-  width: 400px;
-  height: 300px;
-  padding: 1rem;
-  text-align: center;
-}
-
-#display-screen .message-container h2 {
-  font-size: 42px;
-  text-align: center;
-}
-
 #finalTime {
   color: green;
   font-size: 26px;
@@ -338,10 +310,14 @@ body {
   background-color: rgb(255, 255, 255);
   text-align: center;
   top: 190px;
-  left: 5%;
   padding: 3% 3% 15%;
-  z-index: 10;
+  z-index: 30;
   box-sizing: border-box;
+  max-width: 30vw;
+}
+
+#dropDown.winner {
+  top: 38%;
 }
 
 #dropDown button {
@@ -363,6 +339,26 @@ body {
   background-color: #d7dfeb;
 }
 
+.display {
+  position: absolute;
+  background: white;
+  width: 100vw;
+  height: 100vh;
+  top: 80px;
+  padding: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.message-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .timerDisplay svg {
   margin-left: 20px;
   fill: #d7dfeb;
@@ -374,6 +370,10 @@ body {
   body {
     padding: 0;
     margin: 100px 0 0 0;
+  }
+
+  .display img {
+    width: 100%;
   }
 
   .square {
@@ -395,7 +395,7 @@ body {
     display: flex;
     flex-direction: column;
     margin: auto;
-    padding: 10px;
+    padding: 10px 10px 30px;
     height: unset;
     justify-content: flex-start;
   }
@@ -438,5 +438,10 @@ body {
 
   #dropDown {
     top: -44%;
+    max-width: 90vw;
+  }
+
+  #dropDown.winner {
+    top: 12%;
   }
 }

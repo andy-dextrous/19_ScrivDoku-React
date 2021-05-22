@@ -7,12 +7,49 @@ import { FaPen, FaQuestion } from 'react-icons/fa'
 import {takeNotesTurnedOnContext, isCorrectContext} from '../App'
 
 const Controls = (props) => {
-  const {startNewGame, setDifficulty, difficulty, setIsPaused, isPaused} = props
+  const {startNewGame, setDifficulty, difficulty, setIsPaused, isPaused, omittedSquares, chosenNumbers, board} = props
   const [isNewGameButtonClick, setIsNewGameButtonClick] = useState(false)
   const {takeNotesTurnedOn, setTakeNotesTurnedOn} = useContext(takeNotesTurnedOnContext) 
   const {isCorrectTurnedOn, setIsCorrectTurnedOn} = useContext(isCorrectContext) 
+  const [isWinner, setIsWinner] = useState(false)
+  const [finalTime, setFinalTime] = useState("00:00")
+
+  const handleClick = () => {
+    chosenNumbers.length === omittedSquares.length ?
+    checkForWin() :
+    setIsNewGameButtonClick(!isNewGameButtonClick)
+  }
+
+  const checkForWin = ()=>{
+    const squaresFromDOM = document.querySelectorAll('.grid .square')
+    const allAnswers = []
+    squaresFromDOM.forEach(square=>{
+      const number = parseInt(square.innerHTML)
+      allAnswers.push(number)
+    })
+
+    const winner = allAnswers.every((answer, index)=>{
+      return board[index] === answer
+    })
+   
+    winner ? showWin() : showIncorrect()
+  }
+
+  function showWin() {
+    const timerDisplay = document.getElementById('timer').innerText.trim()
+    setFinalTime(timerDisplay)
+    setIsWinner(true)
+  }
+
+  function showIncorrect() {
+    setIsCorrectTurnedOn(true)
+    setTimeout(()=>{
+      setIsCorrectTurnedOn(false)
+    }, 2000)
+  }
 
   return (
+    !isWinner? 
     <div className="controls" id="controls" style={{position:"relative"}}>
       <Counter 
               difficulty = {difficulty} 
@@ -21,7 +58,10 @@ const Controls = (props) => {
       <button 
             className="button" 
             id="start-game" 
-            onClick={() => setIsNewGameButtonClick(!isNewGameButtonClick)}>New Game</button>
+            style={chosenNumbers.length === omittedSquares.length ? {backgroundColor:"green"} : {}}
+            onClick={handleClick}>
+              { chosenNumbers.length === omittedSquares.length ? "Check Answers!" : "New Game" }
+      </button>
       <div className="in-game-controls">
         <button 
               style={takeNotesTurnedOn ? 
@@ -43,9 +83,33 @@ const Controls = (props) => {
       {isNewGameButtonClick && <GameSelector 
                       startNewGame={startNewGame} 
                       setDifficulty={setDifficulty} 
+                      setIsWinner={setIsWinner}
                       setIsNewGameButtonClick={setIsNewGameButtonClick} 
                       isNewGameButtonClick={isNewGameButtonClick}
                       />}
+    </div>
+    :
+    <div className="display">
+      <img src="https://res.cloudinary.com/aromas-coffee-roasters/image/upload/v1621641508/thrust_b6odes.gif" alt="thrust"></img>
+      <div className="message-container">
+        <h2 className='success-message'>Holy shit you're good!</h2>
+        <span id="finalTime">{finalTime}</span>
+      </div>
+      <button 
+            className="button start" 
+            id="start-game" 
+            onClick={()=>{setIsNewGameButtonClick(!isNewGameButtonClick)}}>
+            But can you do it again?
+      </button>
+      {isNewGameButtonClick && <GameSelector 
+                      isWinner={isWinner}
+                      startNewGame={startNewGame} 
+                      setIsWinner={setIsWinner}
+                      setDifficulty={setDifficulty} 
+                      setIsNewGameButtonClick={setIsNewGameButtonClick} 
+                      isNewGameButtonClick={isNewGameButtonClick}
+                      
+       />}
     </div>
   )
 }
