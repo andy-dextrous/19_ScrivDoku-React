@@ -1,0 +1,4 @@
+ Standard Sudoku numbers
+  const EASY_SPACES = 45
+  const MED_SPACES = 51
+  const HARD_SPACES = 58

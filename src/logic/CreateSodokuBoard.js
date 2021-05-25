@@ -1,8 +1,9 @@
 export const WIDTH = 9
 export const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
 export function createSodokuBoard() {
   const MAXIMUM_ATTEMPTS = 1000
-
+  let i = 0
   const thisRow = []
   const board = []
   const numberSquareIndexes = [
@@ -23,7 +24,7 @@ export function createSodokuBoard() {
     thisRow.length = 0
     // Start with a random first row
     board.push(...shuffle(numbers))
-    // For teh remaining rows, create them one at a time
+    // For the remaining rows, create them one at a time
     for (let i = 1; i < WIDTH; i++) {
       thisRow.length = 0
       let row = createRow()
@@ -32,12 +33,11 @@ export function createSodokuBoard() {
     return board
   }
 
-  let i = 0
-
   function createRow() {
     const newRow = [...numbers].sort()
     const calculatedRow = selectNextNumber(newRow)
-    // Some layouts will not alow for any option to work. In which case, run the whole thing again. Otherwise we exceed max call stack
+
+    // Sometimes the first part of a board is created in such a way that it doesn't make a sudoku combo possible. In this case, we run the whole thing again recursively. Otherwise we exceed max call stack. If we reach the maximum attempts then the board returns a short number and the whole thing is called again. 
     if (calculatedRow.length < WIDTH && i < MAXIMUM_ATTEMPTS) {
       i++
       thisRow.length = 0
@@ -48,11 +48,9 @@ export function createSodokuBoard() {
     return calculatedRow
   }
 
-
-
   function selectNextNumber(arr) {
     const currentNumberIndex = board.length + WIDTH - arr.length
-    const legalNumbers = arr.filter((number, index) => {
+    const legalNumbers = arr.filter(number => {
       const allNumbersAbove = []
       const sameSquareNumbers = []
       // Check numbers above
@@ -60,7 +58,7 @@ export function createSodokuBoard() {
         if (board[i] !== undefined) allNumbersAbove.push(board[i])
       }
       // Check numbers in same square
-      numberSquareIndexes.forEach((square, index) => {
+      numberSquareIndexes.forEach(square => {
         if (square.includes(currentNumberIndex)) {
           square.forEach(position => {
             sameSquareNumbers.push(board[position])
@@ -83,13 +81,11 @@ export function createSodokuBoard() {
 
     arr.splice(X, 1)
     if (arr.length > 0) {
-      // Now pass the same row back into the same function minus the chosen number
+      // Now pass the current row back into the same function minus the chosen number
       selectNextNumber(arr)
-    } else {
+    } 
       // Unless we are at the end of the row
-      return
-    }
-
+ 
     return thisRow
   }
 

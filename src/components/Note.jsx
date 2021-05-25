@@ -1,8 +1,9 @@
 import React from 'react'
 
-const Note = ({number, hidden}) => {
+const Note = (props) => {
+  const {number, hidden, chosenNumber} = props
   return (
-    <span>{hidden?'':number}</span>
+    <span>{ hidden && !chosenNumber? '' : number }</span>
   )
 }
 

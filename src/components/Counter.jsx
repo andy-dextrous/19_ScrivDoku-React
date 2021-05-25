@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect, useRef} from 'react'
+import React, {useContext, useState, useEffect, useRef, useCallback} from 'react'
 import {boardContext} from '../App'
 import { FaPause } from 'react-icons/fa';
 import { FaPlay } from 'react-icons/fa';
@@ -8,6 +8,8 @@ const Counter = ({difficulty, setIsPaused, isPaused}) => {
   const [timer,setTimer] = useState("00:00")
   const pausedValue = useRef(0)
   const pausedSeconds = useRef(0)
+  const btnStyle = {padding:'5px', marginLeft:'5px', border:'2px solid #555', borderRadius:'50%', width:'30px', height:'30px', cursor:'pointer'}
+ 
 
   useEffect(() => {
     if(isPaused) return;
@@ -46,26 +48,45 @@ function getSeconds(timeString) {
   return total
 }
 
-function pausePlay() {
-  const secondsElapsed = getSeconds(pausedValue)
-  pausedSeconds.current = secondsElapsed
-  setIsPaused(!isPaused)
-}
+const pausePlay = useCallback(
+  () => {
+    const secondsElapsed = getSeconds(pausedValue)
+    pausedSeconds.current = secondsElapsed
+    setIsPaused(!isPaused)
+  },
+  [isPaused, setIsPaused]
+  )
 
-function unPause() {
-  setIsPaused(!isPaused); 
-}
+const unPause = useCallback(
+  () => {
+    setIsPaused(!isPaused)
+  },
+  [isPaused, setIsPaused]
+)
+
+useEffect(()=> {
+  function setActiveTabListener() {
+    if (document.hidden) {
+      pausePlay()
+    } else {
+      unPause()
+    }
+  }
+
+  document.addEventListener('visibilitychange', setActiveTabListener )
+  return function cleanUp() {
+    document.removeEventListener('visibilitychange', setActiveTabListener )
+  }
+}, [boardConfig, pausePlay, unPause])
 
 
   return (
     <div className="count" id="count">
       <div id="timer" className="timerDisplay">{!isPaused?timer:pausedValue.current}
       { !isPaused ?
-      <FaPause style={{padding:'5px', marginLeft:'5px', border:'2px solid #555', borderRadius:'50%', width:'30px', height:'30px', cursor:'pointer'}}
-                onClick={pausePlay}/>
+      <FaPause style={btnStyle} onClick={pausePlay}/>
       :
-      <FaPlay style={{padding:'5px', marginLeft:'5px', border:'2px solid #555', borderRadius:'50%', width:'30px', height:'30px', cursor:'pointer'}}
-                      onClick={unPause}
+      <FaPlay style={btnStyle} onClick={unPause}
       />
 }
 

@@ -1,21 +1,21 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import Square from './Square'
 import BlankScreen from './BlankScreen'
+import {pausedContext, boardContext} from '../App'
 
-
-const GameBoard = (props) => {
+const GameBoard = ({omittedSquares}) => {
   const [selectedSquare, setSelectedSquare] = useState(null)
-  const {board, omittedSquares, isPaused, setIsPaused} = props
+  const {isPaused} = useContext(pausedContext)
+  const boardConfig = useContext(boardContext)
   
   useEffect(() => {
     setSelectedSquare(null)
-  }, [board])
+  }, [boardConfig])
 
-  if (!board) return
+  // if (!boardConfig) return
   return (
     <div className="grid">
-
-      {!isPaused? board.map((number, index)=>{
+      {!isPaused? boardConfig.map((number, index)=>{
         return <Square 
           key={index} 
           number={number} 
@@ -23,10 +23,9 @@ const GameBoard = (props) => {
           hidden={omittedSquares.includes(index)? true :false}
           setSelectedSquare={setSelectedSquare}
           selectedSquare={selectedSquare}
-          isPaused={isPaused}
           />
       }) :
-      <BlankScreen setIsPaused={setIsPaused} isPaused={isPaused} />
+      <BlankScreen />
       }
     </div>
   )

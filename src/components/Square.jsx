@@ -1,25 +1,27 @@
 import React, {useState, useEffect, useContext} from 'react'
-import {WIDTH} from '../logic/CreateSodokuBoard'
-import {numbers} from '../logic/CreateSodokuBoard'
+import {WIDTH, numbers} from '../logic/CreateSodokuBoard'
 import {pausedContext, boardContext, takeNotesTurnedOnContext, isCorrectContext, chosenNumbersContext} from '../App'
 import Notes from './Notes'
 
 const Square = (props) => {
-const {number, 
-      index, 
-      hidden,  
-      setSelectedSquare, 
-      selectedSquare} = props
-const [isHovered, setIsHovered] = useState(false)
-const [chosenNumber, setChosenNumber] = useState(null)
-const isPaused = useContext(pausedContext)
-const boardConfig = useContext(boardContext)
-const [style, setStyle] = useState({color:"green"})
-const {takeNotesTurnedOn} = useContext(takeNotesTurnedOnContext) 
-const {isCorrectTurnedOn} = useContext(isCorrectContext) 
-const [notes, setNotes] = useState([])
-const {chosenNumbers, setChosenNumbers} = useContext(chosenNumbersContext)
+  const {number, 
+        index, 
+        hidden,  
+        setSelectedSquare, 
+        selectedSquare} = props
+  // Local state      
+  const [isHovered, setIsHovered] = useState(false)
+  const [chosenNumber, setChosenNumber] = useState(null)
+  const [style, setStyle] = useState({})
+  const [notes, setNotes] = useState([])
+  // Global State
+  const {isPaused} = useContext(pausedContext)
+  const {takeNotesTurnedOn} = useContext(takeNotesTurnedOnContext) 
+  const {isCorrectTurnedOn} = useContext(isCorrectContext) 
+  const boardConfig = useContext(boardContext)
+  const {chosenNumbers, setChosenNumbers} = useContext(chosenNumbersContext)
 
+  // Build out the grid in CSS
   function determineBorders(index){
     let classes = []
 
@@ -43,10 +45,12 @@ const {chosenNumbers, setChosenNumbers} = useContext(chosenNumbersContext)
     return classes.join(' ')
   }
 
+  // Make this the currently selected square
   function handleClick() {
     hidden && setSelectedSquare(index)
   }
 
+  // Handle an event while currently selected
   useEffect(()=>{
     function inputValue(e) {
       const value = 
@@ -57,8 +61,9 @@ const {chosenNumbers, setChosenNumbers} = useContext(chosenNumbersContext)
         if (!numbers.includes(parseInt(value)) && e.key !== 'Backspace') return;
         if(!takeNotesTurnedOn){
           setChosenNumber(value)
-          if(!chosenNumbers.includes(index))
-            { setChosenNumbers([...chosenNumbers, index])}
+          if(!chosenNumbers.includes(index)){
+             setChosenNumbers([...chosenNumbers, index])
+            }
           setSelectedSquare(null)
           sessionStorage.setItem(index, value)
           setNotes([])
@@ -91,62 +96,70 @@ const {chosenNumbers, setChosenNumbers} = useContext(chosenNumbersContext)
     }
   }, [selectedSquare, index, setSelectedSquare, hidden, chosenNumber, takeNotesTurnedOn, chosenNumbers, setChosenNumbers])
 
+  // change style state
+  useEffect(()=>{
+    const styleObject = {}
+    if (chosenNumber) {
+      styleObject.color="#69a7f0"}
+    if (isHovered && hidden && selectedSquare !== index) 
+      styleObject.backgroundColor = "#f3f6fa"  
+    if (chosenNumber && selectedSquare !== index) 
+      styleObject.backgroundColor = '#f3f6fa'
+    if (chosenNumber && chosenNumber !== number && isCorrectTurnedOn) 
+      {styleObject.color = "#FFF"
+      styleObject.backgroundColor ="#BA1200"}
+    if (chosenNumber && parseInt(chosenNumber) === number && isCorrectTurnedOn) 
+      {styleObject.backgroundColor = "#08A045"
+       styleObject.color="#FFF"}
+      
+      setStyle(styleObject)
+
+  }, [isHovered, chosenNumber, hidden, index, selectedSquare, number, isCorrectTurnedOn])
+
+  // Allow note taking function while button is active
+  useEffect(()=>{
+    if(!takeNotesTurnedOn || chosenNumber || selectedSquare !== index ) return; 
+    function handleNote(e) {
+        const value = 
+          e.type === 'click' ? e.target.innerHTML : e.key
+          if (!hidden) return; 
+          if (numbers.includes(parseInt(value)) && !notes.includes(parseInt(value))){
+            const newNotes = [...notes,parseInt(value)]
+            setNotes(newNotes)
+            sessionStorage.setItem(`${index}-Notes`, newNotes)
+          }
+      }  
+
+    let numberButtons = document.querySelectorAll('.number-options')
+    numberButtons.forEach(button=>{
+    button.addEventListener('click', handleNote)
+    })
+    document.addEventListener("keydown", handleNote)
+
+  return function cleanup(){
+    let numberButtons = document.querySelectorAll('.number-options')
+    numberButtons.forEach(button=>{
+      button.removeEventListener('click', handleNote)
+    })
+    document.removeEventListener("keydown", handleNote)
+  }
+
+  }, [takeNotesTurnedOn, selectedSquare, index, hidden, setSelectedSquare, notes, chosenNumber])
+
+  // After a pause, fetch the current game data from session storage and rehydrate
   useEffect(() => {
     if (!isPaused)  {
     const persistedNumber = sessionStorage.getItem(index)
     setChosenNumber(persistedNumber)}
+    setSelectedSquare(null)
+  }, [isPaused, index, boardConfig, setSelectedSquare])
 
-    // const persistedNotes = sessionStorage.getItem(`${index}-Notes`)
-    setNotes([])
-  }, [isPaused, index, boardConfig])
-
-
-useEffect(()=>{
-  const styleObject = {}
-  if (chosenNumber) {
-    styleObject.color="#69a7f0"}
-  if (isHovered && hidden && selectedSquare !== index) 
-    styleObject.backgroundColor = "#f3f6fa"  
-  if (chosenNumber && selectedSquare !== index) 
-    styleObject.backgroundColor = '#f3f6fa'
-  if (chosenNumber && chosenNumber !== number && isCorrectTurnedOn) 
-    styleObject.color = "red"
-  if (chosenNumber && parseInt(chosenNumber) === number && isCorrectTurnedOn) 
-    styleObject.color = "green"
-    
-    setStyle(styleObject)
-
-}, [isHovered, chosenNumber, hidden, index, selectedSquare, number, isCorrectTurnedOn])
-
-useEffect(()=>{
-  if(!takeNotesTurnedOn) return;
-  if(selectedSquare !== index) return;  
-  function handleNote(e) {
-      const value = 
-        e.type === 'click' ? e.target.innerHTML : e.key
-        if (!hidden) return; 
-        if (numbers.includes(parseInt(value))){
-          const newNotes = [...notes,parseInt(value)]
-          setNotes(newNotes)
-          sessionStorage.setItem(`${index}-Notes`, newNotes)
-         }
-    }  
-
-  let numberButtons = document.querySelectorAll('.number-options')
-  numberButtons.forEach(button=>{
-   button.addEventListener('click', handleNote)
-  })
-  document.addEventListener("keydown", handleNote)
-
-return function cleanup(){
-  let numberButtons = document.querySelectorAll('.number-options')
-  numberButtons.forEach(button=>{
-    button.removeEventListener('click', handleNote)
-  })
-  document.removeEventListener("keydown", handleNote)
-}
-
-}, [takeNotesTurnedOn, selectedSquare, index, hidden, setSelectedSquare, notes])
+  useEffect(()=>{
+    const persistedNotes = !chosenNumber ? sessionStorage.getItem(`${index}-Notes`) : []
+    if (persistedNotes) {
+      setNotes(persistedNotes)
+    }
+  }, [index, isPaused, chosenNumber])
 
 
   return (
@@ -155,12 +168,10 @@ return function cleanup(){
       onClick={handleClick}
       onMouseOver={()=> {setIsHovered(true)}}
       onMouseLeave={()=> {setIsHovered(false)}}
-      style={style}
-      >
-      {!hidden && number}
-      {hidden && chosenNumber}
-        <Notes notes={notes}/>
-    </div>
+      style={style} >
+        {!hidden? number : chosenNumber}
+        <Notes notes={notes} chosenNumber={chosenNumber} />
+    </div> 
   )
 }
 

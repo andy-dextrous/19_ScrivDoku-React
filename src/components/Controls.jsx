@@ -4,15 +4,17 @@ import {numbers} from '../logic/CreateSodokuBoard'
 import NumberOption from './NumberOption'
 import Counter from './Counter'
 import { FaPen, FaQuestion } from 'react-icons/fa'
-import {takeNotesTurnedOnContext, isCorrectContext} from '../App'
+import {takeNotesTurnedOnContext, isCorrectContext, pausedContext, boardContext} from '../App'
 
 const Controls = (props) => {
-  const {startNewGame, setDifficulty, difficulty, setIsPaused, isPaused, omittedSquares, chosenNumbers, board} = props
+  const {startNewGame, setDifficulty, difficulty, omittedSquares, chosenNumbers} = props
   const [isNewGameButtonClick, setIsNewGameButtonClick] = useState(false)
-  const {takeNotesTurnedOn, setTakeNotesTurnedOn} = useContext(takeNotesTurnedOnContext) 
-  const {isCorrectTurnedOn, setIsCorrectTurnedOn} = useContext(isCorrectContext) 
   const [isWinner, setIsWinner] = useState(false)
   const [finalTime, setFinalTime] = useState("00:00")
+  const {takeNotesTurnedOn, setTakeNotesTurnedOn} = useContext(takeNotesTurnedOnContext) 
+  const {isCorrectTurnedOn, setIsCorrectTurnedOn} = useContext(isCorrectContext) 
+  const {isPaused, setIsPaused} = useContext(pausedContext) 
+  const {boardConfig} = useContext(boardContext) 
 
   const handleClick = () => {
     chosenNumbers.length === omittedSquares.length ?
@@ -29,7 +31,7 @@ const Controls = (props) => {
     })
 
     const winner = allAnswers.every((answer, index)=>{
-      return board[index] === answer
+      return boardConfig[index] === answer
     })
    
     winner ? showWin() : showIncorrect()
@@ -46,6 +48,14 @@ const Controls = (props) => {
     setTimeout(()=>{
       setIsCorrectTurnedOn(false)
     }, 2000)
+  }
+
+  function toggleNotes() {
+    setTakeNotesTurnedOn(!takeNotesTurnedOn)
+  }
+
+  function toggleCorrect() {
+    setIsCorrectTurnedOn(!isCorrectTurnedOn)
   }
 
   return (
@@ -67,19 +77,19 @@ const Controls = (props) => {
               style={takeNotesTurnedOn ? 
               {backgroundColor:'#222222'}:
               {}} 
-              onClick={()=>{setTakeNotesTurnedOn(!takeNotesTurnedOn)}}><FaPen /></button>
+              onClick={toggleNotes}><FaPen /></button>
         <button 
               style={isCorrectTurnedOn? 
               {backgroundColor:'#222222'}:
               {}} 
-              onClick={()=>{setIsCorrectTurnedOn(!isCorrectTurnedOn)}}><FaQuestion /></button>
+              onClick={toggleCorrect}><FaQuestion /></button>
       </div>
       <div className="number-option-container">
         {[...numbers].sort().map(number=>{
           return <NumberOption number={number} key={number} />
         })}
       </div>
-      {/* <button className="button green" id="check-score">Check Answers!</button> */}
+
       {isNewGameButtonClick && <GameSelector 
                       startNewGame={startNewGame} 
                       setDifficulty={setDifficulty} 

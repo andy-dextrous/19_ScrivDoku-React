@@ -12,18 +12,13 @@ export const isCorrectContext = React.createContext()
 export const takeNotesTurnedOnContext = React.createContext()
 export const chosenNumbersContext = React.createContext()
 
-/*
-  const EASY_SPACES = 45
-  const MED_SPACES = 51
-  const HARD_SPACES = 58
-*/
 
 function App() {
-  const [boardConfig, setBoardConfig] = useState([])
-  const [difficulty, setDifficulty] = useState("easy")
   const EASY_SPACES = 30
   const MED_SPACES = 45
   const HARD_SPACES = 50
+  const [boardConfig, setBoardConfig] = useState([])
+  const [difficulty, setDifficulty] = useState("easy")
   const [isPaused, setIsPaused] = useState(false)
   const [omittedSquares, setOmittedSquares] = useState([])
   const [isCorrectTurnedOn, setIsCorrectTurnedOn] = useState(false)
@@ -48,48 +43,30 @@ function App() {
 
   const startNewGame = useCallback(() => {
     sessionStorage.clear()
-    setBoardConfig(createSodokuBoard())
+    let newBoardConfig = []
+    while (newBoardConfig.length < 81){
+      newBoardConfig = createSodokuBoard()
+    }
+    setBoardConfig(newBoardConfig)
     setOmittedSquares(setHiddenSquares(numberOfHiddenSquares))
     setChosenNumbers([])
   }, [numberOfHiddenSquares])
-
-  function setActiveTabListener() {
-    if (document.hidden) {
-      setIsPaused(true)
-    } else {
-      setIsPaused(false)
-    }
-  }
-
+  
   useEffect(() => {
     startNewGame()
   }, [startNewGame])
 
-  useEffect(()=> {
-    document.addEventListener('visibilitychange', setActiveTabListener )
-    return function cleanUp() {
-      document.removeEventListener('visibilitychange', setActiveTabListener )
-    }
-  }, [boardConfig])
-
     return (
     <boardContext.Provider value={boardConfig}>
-      <pausedContext.Provider value={isPaused}>
+      <pausedContext.Provider value={{isPaused, setIsPaused}}>
         <isCorrectContext.Provider value={{isCorrectTurnedOn, setIsCorrectTurnedOn}}>
           <takeNotesTurnedOnContext.Provider value={{takeNotesTurnedOn, setTakeNotesTurnedOn}}>
             <chosenNumbersContext.Provider value={{chosenNumbers, setChosenNumbers}}>
               <Nav />         
-              <GameBoard board={boardConfig} 
-                        difficulty={difficulty} 
-                        omittedSquares={omittedSquares} 
-                        isPaused={isPaused} 
-                        setIsPaused={setIsPaused}/>
+              <GameBoard omittedSquares={omittedSquares} />
               <Controls startNewGame={startNewGame} 
-                        board={boardConfig} 
                         setDifficulty={setDifficulty} 
                         difficulty={difficulty} 
-                        setIsPaused={setIsPaused} 
-                        isPaused={isPaused}
                         omittedSquares={omittedSquares}
                         chosenNumbers={chosenNumbers} />       
             </chosenNumbersContext.Provider>
