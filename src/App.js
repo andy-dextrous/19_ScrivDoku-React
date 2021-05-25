@@ -19,7 +19,7 @@ function App() {
   const HARD_SPACES = 50
   const [boardConfig, setBoardConfig] = useState([])
   const [difficulty, setDifficulty] = useState("easy")
-  const [isPaused, setIsPaused] = useState(false)
+  const [isPaused, setIsPaused] = useState(true)
   const [omittedSquares, setOmittedSquares] = useState([])
   const [isCorrectTurnedOn, setIsCorrectTurnedOn] = useState(false)
   const [takeNotesTurnedOn, setTakeNotesTurnedOn] = useState(false)

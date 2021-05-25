@@ -14,7 +14,7 @@ const Controls = (props) => {
   const {takeNotesTurnedOn, setTakeNotesTurnedOn} = useContext(takeNotesTurnedOnContext) 
   const {isCorrectTurnedOn, setIsCorrectTurnedOn} = useContext(isCorrectContext) 
   const {isPaused, setIsPaused} = useContext(pausedContext) 
-  const {boardConfig} = useContext(boardContext) 
+  const boardConfig = useContext(boardContext) 
 
   const handleClick = () => {
     chosenNumbers.length === omittedSquares.length ?
