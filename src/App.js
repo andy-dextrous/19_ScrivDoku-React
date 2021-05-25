@@ -12,7 +12,6 @@ export const isCorrectContext = React.createContext()
 export const takeNotesTurnedOnContext = React.createContext()
 export const chosenNumbersContext = React.createContext()
 
-
 function App() {
   const EASY_SPACES = 30
   const MED_SPACES = 45
