@@ -1,3 +1,9 @@
+$box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+$theme-blue: #69a7f0;
+$theme-font: Source Sans Pro, sans-serif;
+$big-square-border: 1px #999 solid;
+$selector-hover-color: #d6dfeb;
+
 * {
   outline: none;
   box-sizing: border-box;
@@ -10,7 +16,7 @@ body {
   background: #f7f7f7;
   color: #555555;
   overflow-x: hidden;
-  font-family: Source Sans Pro, sans-serif;
+  font-family: $theme-font;
 }
 
 #root {
@@ -27,7 +33,7 @@ body {
   width: 100vw;
   top: 0;
   left: 0;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+  box-shadow: $box-shadow;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,7 +46,7 @@ body {
 }
 
 .nav h1 span {
-  color: #69a7f0;
+  color: $theme-blue;
   font-style: italic;
 }
 
@@ -87,19 +93,19 @@ body {
 }
 
 .sqr-bdr-left {
-  border-left: 1px #999 solid;
+  border-left: $big-square-border;
 }
 
 .sqr-bdr-right {
-  border-right: 1px #999 solid;
+  border-right: $big-square-border;
 }
 
 .sqr-bdr-top {
-  border-top: 1px #999 solid;
+  border-top: $big-square-border;
 }
 
 .sqr-bdr-bottom {
-  border-bottom: 1px #999 solid;
+  border-bottom: $big-square-border;
 }
 
 .controls {
@@ -110,7 +116,6 @@ body {
   padding: 25px;
   display: flex;
   flex-direction: column;
-  height: 60vh;
 }
 
 .controls .button,
@@ -120,7 +125,7 @@ body {
   height: 100px;
   color: #fff;
   font-size: 22px;
-  background: #69a7f0;
+  background: $theme-blue;
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -143,7 +148,7 @@ body {
 }
 
 .controls .button:hover {
-  background: #65a1e6;
+  background: $theme-blue;
 }
 
 .controls .number-option-container {
@@ -166,7 +171,7 @@ body {
 }
 
 .controls .number-option-container .number-options:hover {
-  background: #d6dfeb;
+  background: $selector-hover-color;
 }
 
 .in-game-controls {
@@ -366,6 +371,58 @@ body {
   border-color: #d7dfeb !important;
 }
 
+.tooltip {
+  background-color: #33333390;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 13px;
+  max-width: 150px;
+}
+
+.squarearrow,
+.arrow::before {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: inherit;
+}
+
+.arrow {
+  visibility: hidden;
+}
+
+.arrow::before {
+  visibility: visible;
+  content: "";
+  transform: rotate(45deg);
+}
+
+.tooltip[data-popper-placement^="top"] > .arrow {
+  bottom: -4px;
+}
+
+.tooltip[data-popper-placement^="bottom"] > .arrow {
+  top: -4px;
+}
+
+.tooltip[data-popper-placement^="left"] > .arrow {
+  right: -4px;
+}
+
+.tooltip[data-popper-placement^="right"] > .arrow {
+  left: -4px;
+}
+
+.tooltip {
+  /* ... */
+  display: none;
+}
+
+.tooltip[data-show] {
+  display: block;
+}
+
 @media (max-width: 1000px) {
   body {
     padding: 0;
@@ -443,5 +500,9 @@ body {
 
   #dropDown.winner {
     top: 12%;
+  }
+
+  .tooltip {
+    display: none;
   }
 }

@@ -1,10 +1,11 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import GameSelector from './GameSelector'
 import {numbers} from '../logic/CreateSodokuBoard'
 import NumberOption from './NumberOption'
 import Counter from './Counter'
 import { FaPen, FaQuestion } from 'react-icons/fa'
 import {takeNotesTurnedOnContext, isCorrectContext, pausedContext, boardContext} from '../App'
+import { createPopper } from '@popperjs/core';
 
 const Controls = (props) => {
   const {startNewGame, setDifficulty, difficulty, omittedSquares, chosenNumbers} = props
@@ -58,6 +59,55 @@ const Controls = (props) => {
     setIsCorrectTurnedOn(!isCorrectTurnedOn)
   }
 
+  function createTooltip(target,tooltip) {
+    const popperInstance = createPopper(target, tooltip, {
+      placement: 'right',
+      modifiers: [
+        {
+          name: 'offset',
+          options: {
+            offset: [0, 8],
+          },
+        },
+      ]
+    });
+console.log(popperInstance)
+    function show() {
+      tooltip.setAttribute('data-show', '');
+      popperInstance.update();
+    }
+    
+    function hide() {
+      tooltip.removeAttribute('data-show');
+    }
+    
+    const showEvents = ['mouseenter', 'focus'];
+    const hideEvents = ['mouseleave', 'blur'];
+    
+    showEvents.forEach(event => {
+      target.addEventListener(event, show);
+    });
+    
+    hideEvents.forEach(event => {
+      target.addEventListener(event, hide);
+    });
+  }
+
+
+  useEffect(() => {
+    const notes = document.querySelector('#toggleNotes');
+    const tooltipNotes = document.querySelector('#tooltip-notes');
+    const showAnswers = document.querySelector('#toggleCorrect');
+    const tooltipAnswers = document.querySelector('#tooltip-answers');
+    
+    createTooltip(notes, tooltipNotes)
+    createTooltip(showAnswers, tooltipAnswers)
+
+    return function cleanup() {
+     console.log('clean up')
+    }
+  }, [])
+
   return (
     !isWinner? 
     <div className="controls" id="controls" style={{position:"relative"}}>
@@ -74,15 +124,19 @@ const Controls = (props) => {
       </button>
       <div className="in-game-controls">
         <button 
+              id="toggleNotes"
               style={takeNotesTurnedOn ? 
               {backgroundColor:'#222222'}:
               {}} 
               onClick={toggleNotes}><FaPen /></button>
         <button 
+              id="toggleCorrect"
               style={isCorrectTurnedOn? 
               {backgroundColor:'#222222'}:
               {}} 
               onClick={toggleCorrect}><FaQuestion /></button>
+        <div id="tooltip-notes" className="tooltip" role="tooltip">Have an idea what number might be in this square? Click to take notes.<div className="arrow" id="arrow" data-popper-arrow></div></div>
+        <div id="tooltip-answers" className="tooltip" role="tooltip">Click to reveal which answers you have right so far!<div className="arrow" id="arrow" data-popper-arrow></div></div>
       </div>
       <div className="number-option-container">
         {[...numbers].sort().map(number=>{

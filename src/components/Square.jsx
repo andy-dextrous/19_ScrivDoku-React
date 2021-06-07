@@ -126,6 +126,16 @@ const Square = (props) => {
           if (numbers.includes(parseInt(value)) && !notes.includes(parseInt(value))){
             const newNotes = [...notes,parseInt(value)]
             setNotes(newNotes)
+            // sessionStorage.removeItem(`${index}-Notes`)
+            sessionStorage.setItem(`${index}-Notes`, newNotes)
+          }
+          if (notes.includes(parseInt(value))) {
+            const deletedNote = notes.indexOf(parseInt(value))
+            const newNotes = [...notes].filter((note,index)=>{
+              return (index !== deletedNote && !isNaN(parseInt(note)))
+            })
+            setNotes(newNotes)
+            // sessionStorage.removeItem(`${index}-Notes`)
             sessionStorage.setItem(`${index}-Notes`, newNotes)
           }
       }  
@@ -144,23 +154,39 @@ const Square = (props) => {
     document.removeEventListener("keydown", handleNote)
   }
 
-  }, [takeNotesTurnedOn, selectedSquare, index, hidden, setSelectedSquare, notes, chosenNumber])
+  }, [takeNotesTurnedOn, selectedSquare, index, hidden, setSelectedSquare, notes, chosenNumber, boardConfig])
 
   // After a pause, fetch the current game data from session storage and rehydrate
-  useEffect(() => {
-    if (!isPaused)  {
-    const persistedNumber = sessionStorage.getItem(index)
-    setChosenNumber(persistedNumber)}
-    setSelectedSquare(null)
-  }, [isPaused, index, boardConfig, setSelectedSquare])
-
   useEffect(()=>{
     const persistedNotes = !chosenNumber ? sessionStorage.getItem(`${index}-Notes`) : []
-    if (persistedNotes) {
-      setNotes(persistedNotes)
-    }
-  }, [index, isPaused, chosenNumber])
+    if (persistedNotes === null || persistedNotes.length === 0 ) return
+    persistedNotes.split(",")
+    const reducedNumbers = []
+    const convertedNumbers = Array.from(persistedNotes)
 
+    convertedNumbers
+      .filter(note => { 
+        return (!isNaN(parseInt(note)))
+      })
+      .map(note =>{
+        return parseInt(note)
+      })
+      .forEach(number => {
+        if (!reducedNumbers.includes(number)) {reducedNumbers.push(number)}
+      })
+
+      setNotes(reducedNumbers)   
+  }, [index, chosenNumber])
+
+  useEffect(() => {
+    const persistedNumber = sessionStorage.getItem(index)
+    if (!isPaused && persistedNumber !== null)  {
+    setChosenNumber(persistedNumber)
+    setNotes([])
+  }
+    setSelectedSquare(null)
+   
+  }, [isPaused, index, boardConfig, setSelectedSquare])
 
   return (
     <div 
@@ -169,8 +195,10 @@ const Square = (props) => {
       onMouseOver={()=> {setIsHovered(true)}}
       onMouseLeave={()=> {setIsHovered(false)}}
       style={style} >
+        <div className="chosenNumber">
         {!hidden? number : chosenNumber}
-        <Notes notes={notes} chosenNumber={chosenNumber} />
+        </div>
+        <Notes notes={notes} chosenNumber={chosenNumber} boardConfig={boardConfig}/>
     </div> 
   )
 }

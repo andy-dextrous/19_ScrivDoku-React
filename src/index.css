@@ -146,7 +146,6 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  height: 60vh;
 }
 
 .controls .button,
@@ -182,7 +181,7 @@ body {
 }
 
 .controls .button:hover {
-  background: #65a1e6;
+  background: #69a7f0;
 }
 
 .controls .number-option-container {
@@ -463,6 +462,59 @@ body {
   border-color: #d7dfeb !important;
 }
 
+.tooltip {
+  background-color: #33333390;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 13px;
+  max-width: 150px;
+}
+
+.squarearrow,
+.arrow::before {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: inherit;
+}
+
+.arrow {
+  visibility: hidden;
+}
+
+.arrow::before {
+  visibility: visible;
+  content: "";
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+
+.tooltip[data-popper-placement^="top"] > .arrow {
+  bottom: -4px;
+}
+
+.tooltip[data-popper-placement^="bottom"] > .arrow {
+  top: -4px;
+}
+
+.tooltip[data-popper-placement^="left"] > .arrow {
+  right: -4px;
+}
+
+.tooltip[data-popper-placement^="right"] > .arrow {
+  left: -4px;
+}
+
+.tooltip {
+  /* ... */
+  display: none;
+}
+
+.tooltip[data-show] {
+  display: block;
+}
+
 @media (max-width: 1000px) {
   body {
     padding: 0;
@@ -545,6 +597,9 @@ body {
   }
   #dropDown.winner {
     top: 12%;
+  }
+  .tooltip {
+    display: none;
   }
 }
 /*# sourceMappingURL=index.css.map */

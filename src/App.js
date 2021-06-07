@@ -49,6 +49,7 @@ function App() {
     setBoardConfig(newBoardConfig)
     setOmittedSquares(setHiddenSquares(numberOfHiddenSquares))
     setChosenNumbers([])
+    setIsPaused(false)
   }, [numberOfHiddenSquares])
   
   useEffect(() => {
