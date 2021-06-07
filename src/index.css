@@ -599,7 +599,7 @@ body {
     top: 12%;
   }
   .tooltip {
-    display: none;
+    visibility: hidden;
   }
 }
 /*# sourceMappingURL=index.css.map */

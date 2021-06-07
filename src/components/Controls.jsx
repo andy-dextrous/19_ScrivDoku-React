@@ -27,7 +27,8 @@ const Controls = (props) => {
     const squaresFromDOM = document.querySelectorAll('.grid .square')
     const allAnswers = []
     squaresFromDOM.forEach(square=>{
-      const number = parseInt(square.innerHTML)
+      const inner = square.querySelector('.chosenNumber').innerHTML 
+      const number = parseInt(inner)
       allAnswers.push(number)
     })
 
