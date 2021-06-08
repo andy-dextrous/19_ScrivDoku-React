@@ -188,6 +188,10 @@ const Square = (props) => {
    
   }, [isPaused, index, boardConfig, setSelectedSquare])
 
+  useEffect(() => {
+    setChosenNumber(null)
+  }, [boardConfig])
+
   return (
     <div 
       className={"square " + determineBorders(index)} 

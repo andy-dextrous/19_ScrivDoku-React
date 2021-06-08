@@ -72,7 +72,6 @@ const Controls = (props) => {
         },
       ]
     });
-console.log(popperInstance)
     function show() {
       tooltip.setAttribute('data-show', '');
       popperInstance.update();
