@@ -227,7 +227,7 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  width: 70%;
+  width: 80%;
   margin: 10px auto;
 }
 
@@ -295,8 +295,8 @@ body {
 
 #finalTime {
   color: green;
-  font-size: 26px;
-  padding-bottom: 2rem;
+  font-size: 36px;
+  padding-top: 2rem;
 }
 
 #name {
@@ -423,9 +423,9 @@ body {
   position: absolute;
   background: white;
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 80px);
   top: 80px;
-  padding: 10%;
+  padding: 5%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -453,6 +453,7 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  text-align: center;
 }
 
 .timerDisplay svg {
@@ -601,5 +602,102 @@ body {
   .tooltip {
     visibility: hidden;
   }
+}
+
+#leaderboard {
+  width: 90vw;
+  height: 150px;
+  top: 10px;
+  padding: 20px;
+  background: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+#leaderboard li {
+  list-style: none;
+  padding-bottom: 10px;
+}
+
+#leaderboard button {
+  width: 100%;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background: #444;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+#leaderboard input {
+  width: 100%;
+  padding: 10px 20px;
+}
+
+#leaderboard .leader {
+  width: 100%;
+}
+
+#leaderboard .leader li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+}
+
+#leaderboard .leader li .victor {
+  position: absolute;
+  top: 0;
+  left: -20px;
+  color: #69a7f0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 60%;
+}
+
+#leaderboard .leader li span {
+  font-family: inherit;
+}
+
+#leaderboard .leader li span:first-of-type {
+  width: 70%;
+}
+
+#leaderboard .leader li .leader-name {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+#leaderboard .leader li .leader-mode {
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+#leaderboard .leader li .leader-time {
+  font-weight: 700;
 }
 /*# sourceMappingURL=index.css.map */

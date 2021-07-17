@@ -5,504 +5,571 @@ $big-square-border: 1px #999 solid;
 $selector-hover-color: #d6dfeb;
 
 * {
-  outline: none;
-  box-sizing: border-box;
+	outline: none;
+	box-sizing: border-box;
 }
 
 body {
-  width: 100vw;
-  padding-top: 100px;
-  height: 100vh;
-  background: #f7f7f7;
-  color: #555555;
-  overflow-x: hidden;
-  font-family: $theme-font;
+	width: 100vw;
+	padding-top: 100px;
+	height: 100vh;
+	background: #f7f7f7;
+	color: #555555;
+	overflow-x: hidden;
+	font-family: $theme-font;
 }
 
 #root {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-wrap: nowrap;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	flex-wrap: nowrap;
 }
 
 .nav {
-  position: absolute;
-  background: #ffffff;
-  height: 80px;
-  width: 100vw;
-  top: 0;
-  left: 0;
-  box-shadow: $box-shadow;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	position: absolute;
+	background: #ffffff;
+	height: 80px;
+	width: 100vw;
+	top: 0;
+	left: 0;
+	box-shadow: $box-shadow;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .nav h1 {
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 3px;
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 3px;
 }
 
 .nav h1 span {
-  color: $theme-blue;
-  font-style: italic;
+	color: $theme-blue;
+	font-style: italic;
 }
 
 .grid {
-  width: 60vh;
-  height: 60vh;
-  background: white;
-  display: flex;
-  flex-wrap: wrap;
+	width: 60vh;
+	height: 60vh;
+	background: white;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .square {
-  height: calc(60vh / 9);
-  width: calc(60vh / 9);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #efefef;
-  font-size: 22px;
-  cursor: pointer;
-  position: relative;
-  color: #666;
-  font-weight: 300;
-  font-size: 36px;
+	height: calc(60vh / 9);
+	width: calc(60vh / 9);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: 1px solid #efefef;
+	font-size: 22px;
+	cursor: pointer;
+	position: relative;
+	color: #666;
+	font-weight: 300;
+	font-size: 36px;
 }
 
 .square .notes {
-  font-size: 10px;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  color: #999;
-  font-weight: bold;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+	font-size: 10px;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	color: #999;
+	font-weight: bold;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: repeat(3, 1fr);
 }
 
 .square .notes span {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  pointer-events: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	pointer-events: none;
 }
 
 .sqr-bdr-left {
-  border-left: $big-square-border;
+	border-left: $big-square-border;
 }
 
 .sqr-bdr-right {
-  border-right: $big-square-border;
+	border-right: $big-square-border;
 }
 
 .sqr-bdr-top {
-  border-top: $big-square-border;
+	border-top: $big-square-border;
 }
 
 .sqr-bdr-bottom {
-  border-bottom: $big-square-border;
+	border-bottom: $big-square-border;
 }
 
 .controls {
-  background: white;
-  width: 30vw;
-  margin-left: 50px;
-  border: 1px #efefef solid;
-  padding: 25px;
-  display: flex;
-  flex-direction: column;
+	background: white;
+	width: 30vw;
+	margin-left: 50px;
+	border: 1px #efefef solid;
+	padding: 25px;
+	display: flex;
+	flex-direction: column;
 }
 
 .controls .button,
 .reset-btn,
 .display button.start {
-  width: 100%;
-  height: 100px;
-  color: #fff;
-  font-size: 22px;
-  background: $theme-blue;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  user-select: none;
+	width: 100%;
+	height: 100px;
+	color: #fff;
+	font-size: 22px;
+	background: $theme-blue;
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+	user-select: none;
 }
 
 .display button.start {
-  max-width: 500px;
+	max-width: 500px;
 }
 
 .reset-btn {
-  width: 250px;
-  height: 80px;
+	width: 250px;
+	height: 80px;
 }
 
 .controls .button.green {
-  background-color: green;
-  height: 60px;
-  margin-top: 20px;
+	background-color: green;
+	height: 60px;
+	margin-top: 20px;
 }
 
 .controls .button:hover {
-  background: $theme-blue;
+	background: $theme-blue;
 }
 
 .controls .number-option-container {
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 20px;
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: 20px;
 }
 
 .controls .number-option-container .number-options {
-  width: 33%;
-  height: 100px;
-  border: 3px #fff solid;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 32px;
-  cursor: pointer;
-  background-color: #f3f6fa;
-  border-radius: 5px;
+	width: 33%;
+	height: 100px;
+	border: 3px #fff solid;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 32px;
+	cursor: pointer;
+	background-color: #f3f6fa;
+	border-radius: 5px;
 }
 
 .controls .number-option-container .number-options:hover {
-  background: $selector-hover-color;
+	background: $selector-hover-color;
 }
 
 .in-game-controls {
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 70%;
-  margin: 10px auto;
+	padding: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 80%;
+	margin: 10px auto;
 }
 
 .in-game-controls button {
-  padding: 15px 18px;
-  background: #f3f6fa;
-  font-size: 24px;
-  border-radius: 100%;
-  border: none;
-  cursor: pointer;
-  color: #69a7f0;
+	padding: 15px 18px;
+	background: #f3f6fa;
+	font-size: 24px;
+	border-radius: 100%;
+	border: none;
+	cursor: pointer;
+	color: #69a7f0;
 }
 
 .in-game-controls button:hover {
-  transform: scale(1.05);
-  transform-origin: center center;
+	transform: scale(1.05);
+	transform-origin: center center;
 }
 
 #start-game {
-  min-height: 50px;
+	min-height: 50px;
 }
 
 .count {
-  height: 30px;
-  margin-bottom: 20px;
+	height: 30px;
+	margin-bottom: 20px;
 }
 
 .square.hidden:hover {
-  background: #f3f6fa;
-  cursor: pointer;
+	background: #f3f6fa;
+	cursor: pointer;
 }
 
 .square.hidden.correct {
-  color: green;
+	color: green;
 }
 
 .square.hidden.incorrect {
-  color: red;
+	color: red;
 }
 
 .square.hidden.peekcorrect {
-  background: green;
-  color: #ffffff;
+	background: green;
+	color: #ffffff;
 }
 
 .square.hidden.peekincorrect {
-  background: red;
-  color: #ffffff;
+	background: red;
+	color: #ffffff;
 }
 
 .square.clickedNumber {
-  background: #d7dfeb;
+	background: #d7dfeb;
 }
 
 .added {
-  color: #69a7f0;
+	color: #69a7f0;
 }
 
 .count {
-  font-size: 20px;
-  text-align: center;
+	font-size: 20px;
+	text-align: center;
 }
 
 #finalTime {
-  color: green;
-  font-size: 26px;
-  padding-bottom: 2rem;
+	color: green;
+	font-size: 36px;
+	padding-top: 2rem;
 }
 
 #name {
-  width: 80%;
-  align-self: center;
-  height: 40px;
-  border-radius: 5px;
-  padding: 5px;
+	width: 80%;
+	align-self: center;
+	height: 40px;
+	border-radius: 5px;
+	padding: 5px;
 }
 
 #closeBtn {
-  position: absolute;
-  right: 100px;
-  top: 100px;
-  z-index: 100;
-  color: white;
-  cursor: pointer;
-  border: 1px solid white;
-  padding: 15px 20px;
-  border-radius: 50%;
+	position: absolute;
+	right: 100px;
+	top: 100px;
+	z-index: 100;
+	color: white;
+	cursor: pointer;
+	border: 1px solid white;
+	padding: 15px 20px;
+	border-radius: 50%;
 }
 
 .count {
-  display: flex;
+	display: flex;
 }
 
 .timerDisplay,
 .difficulty-display {
-  width: 50%;
+	width: 50%;
 }
 
 .timerDisplay {
-  text-align: left;
+	text-align: left;
 }
 
 .difficulty-display {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 0;
-  text-align: right;
-  user-select: none;
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	padding: 0;
+	text-align: right;
+	user-select: none;
 }
 
 .difficulty-display span {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+	font-size: 10px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
 }
 
 .difficulty-display h3 {
-  margin: 0;
-  font-size: 16px;
-  text-transform: uppercase;
+	margin: 0;
+	font-size: 16px;
+	text-transform: uppercase;
 }
 
 .timerDisplay {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 #dropDown {
-  position: absolute;
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 20px 0px;
-  width: 90%;
-  background-color: rgb(255, 255, 255);
-  text-align: center;
-  top: 190px;
-  padding: 3% 3% 15%;
-  z-index: 30;
-  box-sizing: border-box;
-  max-width: 30vw;
+	position: absolute;
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 20px 0px;
+	width: 90%;
+	background-color: rgb(255, 255, 255);
+	text-align: center;
+	top: 190px;
+	padding: 3% 3% 15%;
+	z-index: 30;
+	box-sizing: border-box;
+	max-width: 30vw;
 }
 
 #dropDown.winner {
-  top: 38%;
+	top: 38%;
 }
 
 #dropDown button {
-  display: flex;
-  background-color: rgb(243, 246, 250);
-  border: 1px solid rgb(239, 239, 239);
-  border-radius: 5px;
-  font-size: 16px;
-  justify-content: flex-start;
-  align-items: center;
-  cursor: pointer;
-  height: 50px;
-  width: 90%;
-  margin: auto;
-  transition: background-color 0.1s cubic-bezier(0.075, 0.82, 0.165, 1);
+	display: flex;
+	background-color: rgb(243, 246, 250);
+	border: 1px solid rgb(239, 239, 239);
+	border-radius: 5px;
+	font-size: 16px;
+	justify-content: flex-start;
+	align-items: center;
+	cursor: pointer;
+	height: 50px;
+	width: 90%;
+	margin: auto;
+	transition: background-color 0.1s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 #dropDown button:hover {
-  background-color: #d7dfeb;
+	background-color: #d7dfeb;
 }
 
 .display {
-  position: absolute;
-  background: white;
-  width: 100vw;
-  height: 100vh;
-  top: 80px;
-  padding: 10%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  z-index: 10;
+	position: absolute;
+	background: white;
+	width: 100vw;
+	height: calc(100vh - 80px);
+	top: 80px;
+	padding: 5%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	z-index: 10;
 }
 
 .message-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
 }
 
 .timerDisplay svg {
-  margin-left: 20px;
-  fill: #d7dfeb;
-  stroke: #d7dfeb;
-  border-color: #d7dfeb !important;
+	margin-left: 20px;
+	fill: #d7dfeb;
+	stroke: #d7dfeb;
+	border-color: #d7dfeb !important;
 }
 
 .tooltip {
-  background-color: #33333390;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-size: 13px;
-  max-width: 150px;
+	background-color: #33333390;
+	color: white;
+	padding: 5px 10px;
+	border-radius: 4px;
+	font-size: 13px;
+	max-width: 150px;
 }
 
 .squarearrow,
 .arrow::before {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: inherit;
+	position: absolute;
+	width: 8px;
+	height: 8px;
+	background: inherit;
 }
 
 .arrow {
-  visibility: hidden;
+	visibility: hidden;
 }
 
 .arrow::before {
-  visibility: visible;
-  content: "";
-  transform: rotate(45deg);
+	visibility: visible;
+	content: "";
+	transform: rotate(45deg);
 }
 
 .tooltip[data-popper-placement^="top"] > .arrow {
-  bottom: -4px;
+	bottom: -4px;
 }
 
 .tooltip[data-popper-placement^="bottom"] > .arrow {
-  top: -4px;
+	top: -4px;
 }
 
 .tooltip[data-popper-placement^="left"] > .arrow {
-  right: -4px;
+	right: -4px;
 }
 
 .tooltip[data-popper-placement^="right"] > .arrow {
-  left: -4px;
+	left: -4px;
 }
 
 .tooltip {
-  /* ... */
-  display: none;
+	/* ... */
+	display: none;
 }
 
 .tooltip[data-show] {
-  display: block;
+	display: block;
 }
 
 @media (max-width: 1000px) {
-  body {
-    padding: 0;
-    margin: 100px 0 0 0;
-  }
+	body {
+		padding: 0;
+		margin: 100px 0 0 0;
+	}
 
-  .display img {
-    width: 100%;
-  }
+	.display img {
+		width: 100%;
+	}
 
-  .square {
-    height: calc(90vw / 9);
-    width: calc(90vw / 9);
-    font-size: 28px;
-  }
+	.square {
+		height: calc(90vw / 9);
+		width: calc(90vw / 9);
+		font-size: 28px;
+	}
 
-  .grid {
-    width: 90vw;
-    height: 90vw;
-    margin: 5vw;
-    margin: auto;
-    margin-bottom: 2%;
-  }
+	.grid {
+		width: 90vw;
+		height: 90vw;
+		margin: 5vw;
+		margin: auto;
+		margin-bottom: 2%;
+	}
 
-  .controls {
-    width: 95vw;
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    padding: 10px 10px 30px;
-    height: unset;
-    justify-content: flex-start;
-  }
+	.controls {
+		width: 95vw;
+		display: flex;
+		flex-direction: column;
+		margin: auto;
+		padding: 10px 10px 30px;
+		height: unset;
+		justify-content: flex-start;
+	}
 
-  #root {
-    flex-direction: column;
-  }
+	#root {
+		flex-direction: column;
+	}
 
-  #start-game {
-    padding: 5px;
-    height: 60px;
-    order: 4;
-  }
+	#start-game {
+		padding: 5px;
+		height: 60px;
+		order: 4;
+	}
 
-  .in-game-controls {
-    order: 1;
-    height: 100px;
-    margin: 0 auto;
-  }
+	.in-game-controls {
+		order: 1;
+		height: 100px;
+		margin: 0 auto;
+	}
 
-  .count {
-    order: -1;
-  }
+	.count {
+		order: -1;
+	}
 
-  .number-option-container {
-    order: -1;
-    margin-bottom: 10%;
-    width: 100%;
-    // justify-content: space-between;
-  }
+	.number-option-container {
+		order: -1;
+		margin-bottom: 10%;
+		width: 100%;
+		// justify-content: space-between;
+	}
 
-  .controls .number-option-container .number-options {
-    width: calc(90vw / 9 - 1px);
-    border-width: 1px;
-    margin: 0;
-    padding: 0;
-    height: calc(90vw / 9);
-    font-size: 24px;
-  }
+	.controls .number-option-container .number-options {
+		width: calc(90vw / 9 - 1px);
+		border-width: 1px;
+		margin: 0;
+		padding: 0;
+		height: calc(90vw / 9);
+		font-size: 24px;
+	}
 
-  #dropDown {
-    top: -44%;
-    max-width: 90vw;
-  }
+	#dropDown {
+		top: -44%;
+		max-width: 90vw;
+	}
 
-  #dropDown.winner {
-    top: 12%;
-  }
+	#dropDown.winner {
+		top: 12%;
+	}
 
-  .tooltip {
-    visibility: hidden;
-  }
+	.tooltip {
+		visibility: hidden;
+	}
+}
+
+#leaderboard {
+	width: 90vw;
+	height: 150px;
+	top: 10px;
+	padding: 20px;
+	background: #fff;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	li {
+		list-style: none;
+		padding-bottom: 10px;
+	}
+	button {
+		width: 100%;
+		padding: 10px 20px;
+		border-radius: 5px;
+		border: none;
+		background: #444;
+		color: #fff;
+		text-transform: uppercase;
+	}
+	input {
+		width: 100%;
+		padding: 10px 20px;
+	}
+	.leader {
+		width: 100%;
+		li {
+			display: flex;
+			position: relative;
+			justify-content: space-between;
+			align-items: center;
+			width: 100%;
+			.victor {
+				position: absolute;
+				top: 0;
+				left: -20px;
+				color: $theme-blue;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 60%;
+			}
+			span {
+				font-family: inherit;
+				&:first-of-type {
+					width: 70%;
+				}
+			}
+			.leader-name {
+				font-weight: 700;
+				font-size: 20px;
+			}
+			.leader-mode {
+				font-size: 12px;
+				text-transform: uppercase;
+			}
+			.leader-time {
+				font-weight: 700;
+			}
+		}
+	}
 }

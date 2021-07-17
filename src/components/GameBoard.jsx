@@ -12,7 +12,7 @@ const GameBoard = ({omittedSquares}) => {
     setSelectedSquare(null)
   }, [boardConfig])
 
-  // if (!boardConfig) return
+
   return (
     <div className="grid">
       {!isPaused? boardConfig.map((number, index)=>{

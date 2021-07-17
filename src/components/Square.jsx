@@ -156,6 +156,11 @@ const Square = (props) => {
 
   }, [takeNotesTurnedOn, selectedSquare, index, hidden, setSelectedSquare, notes, chosenNumber, boardConfig])
 
+  useEffect(() => {
+    setChosenNumber(null)
+    setNotes([])
+  }, [boardConfig])
+
   // After a pause, fetch the current game data from session storage and rehydrate
   useEffect(()=>{
     const persistedNotes = !chosenNumber ? sessionStorage.getItem(`${index}-Notes`) : []
@@ -188,9 +193,7 @@ const Square = (props) => {
    
   }, [isPaused, index, boardConfig, setSelectedSquare])
 
-  useEffect(() => {
-    setChosenNumber(null)
-  }, [boardConfig])
+
 
   return (
     <div 
