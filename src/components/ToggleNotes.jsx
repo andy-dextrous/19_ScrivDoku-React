@@ -8,7 +8,6 @@ const ToggleNotes = ({ toggleNotes, takeNotesTurnedOn }) => {
 			style={takeNotesTurnedOn ? { backgroundColor: "#222222" } : {}}
 			onClick={toggleNotes}>
 			<FaPen />
-			{takeNotesTurnedOn && <span className="type-on">Take Notes</span>}
 		</button>
 	);
 };

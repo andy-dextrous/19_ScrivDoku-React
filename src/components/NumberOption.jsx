@@ -1,7 +1,9 @@
-import React from "react"
+import React from 'react'
 
-const NumberOption = ({ number }) => {
-	return <div className="number-options">{number}</div>
+const NumberOption = ({number}) => {
+  return (
+    <div className="number-options">{number}</div> 
+  )
 }
 
 export default NumberOption
