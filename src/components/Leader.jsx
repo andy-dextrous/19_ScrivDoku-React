@@ -1,5 +1,5 @@
-import React from "react"
-import { FaCrown } from "react-icons/fa"
+import React from "react";
+import { FaCrown } from "react-icons/fa";
 
 const Leader = ({ leader, i }) => {
 	return (
@@ -15,7 +15,7 @@ const Leader = ({ leader, i }) => {
 				<span className="leader-time">{leader.time}</span>
 			</li>
 		</div>
-	)
-}
+	);
+};
 
-export default Leader
+export default Leader;

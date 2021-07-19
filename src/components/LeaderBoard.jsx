@@ -1,15 +1,16 @@
-import React, { useContext } from "react"
-import { leadersContext } from "./../App"
-import Leader from "./Leader"
-import uuid from "react-uuid"
+import React, { useContext } from "react";
+import { leadersContext } from "./../App";
+import Leader from "./Leader";
+import uuid from "react-uuid";
 
 const LeaderBoard = (props) => {
-	const { position, isWinner, submitting, submitLeaders, setSubmitting } = props
-	const { leaders } = useContext(leadersContext)
+	const { position, isWinner, submitting, submitLeaders, setSubmitting } =
+		props;
+	const { leaders } = useContext(leadersContext);
 
 	function submitAndClose() {
-		submitLeaders()
-		setSubmitting(false)
+		submitLeaders();
+		setSubmitting(false);
 	}
 
 	return isWinner && submitting ? (
@@ -20,10 +21,10 @@ const LeaderBoard = (props) => {
 	) : (
 		<div id="leaderboard" style={{ position: position }}>
 			{leaders.map((leader, i) => {
-				return <Leader leader={leader} key={uuid()} i={i} />
+				return <Leader leader={leader} key={uuid()} i={i} />;
 			})}
 		</div>
-	)
-}
+	);
+};
 
-export default LeaderBoard
+export default LeaderBoard;
