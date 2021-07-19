@@ -134,6 +134,7 @@ body {
 }
 
 .controls {
+  position: relative;
   background: white;
   width: 30vw;
   margin-left: 50px;
@@ -699,5 +700,28 @@ body {
 
 #leaderboard .leader li .leader-time {
   font-weight: 700;
+}
+
+@media (min-width: 800px) {
+  #leaderboard {
+    width: 90%;
+    height: 170px;
+  }
+}
+
+.toggle-btn {
+  position: relative;
+}
+
+.type-on {
+  position: absolute;
+  color: #222222;
+  font-size: 10px;
+  text-transform: uppercase;
+  bottom: -50%;
+  left: 0;
+  width: 100%;
+  display: block;
+  text-align: center;
 }
 /*# sourceMappingURL=index.css.map */

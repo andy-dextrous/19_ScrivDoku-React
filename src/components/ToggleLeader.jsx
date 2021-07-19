@@ -1,5 +1,5 @@
-import React from "react";
-import { FaCrown } from "react-icons/fa";
+import React from "react"
+import { FaCrown } from "react-icons/fa"
 
 const ToggleLeader = ({ toggleLeaderBoard, showLeaders }) => {
 	return (
@@ -8,8 +8,9 @@ const ToggleLeader = ({ toggleLeaderBoard, showLeaders }) => {
 			style={showLeaders ? { backgroundColor: "#222222" } : {}}
 			onClick={toggleLeaderBoard}>
 			<FaCrown />
+			{showLeaders && <span className="type-on">Leaders</span>}
 		</button>
-	);
-};
+	)
+}
 
-export default ToggleLeader;
+export default ToggleLeader
